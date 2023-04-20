@@ -6,8 +6,11 @@
 class World{
 private:
   std::vector<Organism*> organisms;
-protected:
+  int width;
+  int height;
 public:
+  World();
+  ~World();
   void nextTurn();
   void draw();
 };

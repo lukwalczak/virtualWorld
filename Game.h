@@ -21,5 +21,6 @@ public:
   void drawMenu(int &cursorPosition, Console *console);
   void getPlayerMove();
   void drawSettings();
+  void drawMapBorders(Console *console);
   void settings();
 };

@@ -98,7 +98,7 @@ void Game::getPlayerMove() {
       confirmMove = false;
       this->nextTurn = true;
       switch (input) {
-      case 'q':{
+      case 'q': {
         this->continueGame = false;
         break;
       }
@@ -178,6 +178,21 @@ void Game::drawLogs(Console *console) {
   }
 }
 
+void Game::drawMapBorders(Console *console) {
+  // top
+  for (int i = 0; i < MAXDISPLAYWORLDWIDTH; i++)
+    mvprintw(0, i, "+");
+  // bottom
+  for (int i = 0; i < MAXDISPLAYWORLDWIDTH; i++)
+    mvprintw(MAXDISPLAYWORLDHEIGHT, i, "+");
+  // left
+  for (int i = 0; i < MAXDISPLAYWORLDHEIGHT; i++)
+    mvprintw(i, 0, "+");
+  // right
+  for (int i = 0; i < MAXDISPLAYWORLDHEIGHT; i++)
+    mvprintw(i, MAXDISPLAYWORLDWIDTH, "+");
+}
+
 void Game::drawInterface(Console *console) {
   erase();
   // Drawing Control settings
@@ -198,10 +213,11 @@ void Game::drawInterface(Console *console) {
 
   mvprintw(console->getConsoleHeight() * 3 / 4 + 10,
            console->getConsoleWidth() * 3 / 4, "q - exit to menu");
-  
+
   mvprintw(2, console->getConsoleWidth() * 3 / 4 + 8, "Turn: ");
 
+  // Drawing map borders
+  this->drawMapBorders(console);
   // Drawing logs
   this->drawLogs(console);
-
 }
