@@ -14,9 +14,9 @@ Console::~Console(){
   delete this;
 }
 
-int Console::getConsoleHeight(){ return this->maxY; }
+const int &Console::getConsoleHeight() const { return this->maxY; }
 
-int Console::getConsoleWidth(){ return this->maxX; }
+const int &Console::getConsoleWidth() const { return this->maxX; }
 
 Console *Console::getInstance(){
   std::lock_guard<std::mutex> lock(mutex);

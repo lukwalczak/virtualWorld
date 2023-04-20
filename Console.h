@@ -14,6 +14,6 @@ public:
   Console(Console &other);
   void operator=(const Console &);
   static Console *getInstance();
-  int getConsoleWidth();
-  int getConsoleHeight();
+  const int &getConsoleWidth() const;
+  const int &getConsoleHeight() const;
 };
