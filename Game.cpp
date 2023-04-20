@@ -7,6 +7,7 @@ Game::Game() {
   this->world = nullptr;
   this->nextTurn = false;
   this->continueGame = true;
+  this->currentTurn = 0;
 }
 
 Game::~Game() { delete this->world; }
@@ -18,15 +19,15 @@ void Game::startGame() {
   if (this->world == nullptr) {
     this->world = new World();
   }
-
+  
   while (this->continueGame) {
 
+    this->drawInterface(console);
+    this->world->draw();
     if (this->nextTurn) {
       this->world->nextTurn();
       this->nextTurn = false;
     }
-
-    this->drawInterface(console);
     this->getPlayerMove();
   }
 
@@ -95,11 +96,10 @@ void Game::getPlayerMove() {
     char input = getch();
     char confirm = getch();
     if (confirm == '\n') {
-      confirmMove = false;
-      this->nextTurn = true;
       switch (input) {
       case 'q': {
         this->continueGame = false;
+        confirmMove = false;
         break;
       }
 
@@ -113,22 +113,40 @@ void Game::getPlayerMove() {
       }
       // arrow down
       case 0x42: {
-        break;
+        if(world->getHuman()->action(1, 0)){
+          confirmMove = false;
+          this->nextTurn = true;
+          }
+          break;
       }
       // arrow left
       case 0x44: {
+        if(world->getHuman()->action(0, -1)){
+        confirmMove = false;
+        this->nextTurn = true;
+        }
+        break;
       }
       // arrow right
       case 0x43: {
+        if(world->getHuman()->action(0, 1)){
+        confirmMove = false;
+        this->nextTurn = true;
+        }
         break;
       }
       // arrow up
       case 0x41: {
+        if(world->getHuman()->action(-1, 0)){
+        confirmMove = false;
+        this->nextTurn = true;
+        }
         break;
       }
       }
     }
   }
+  this->currentTurn++;
 }
 
 void Game::drawMenu(int &cursorPosition, Console *console) {
@@ -180,17 +198,17 @@ void Game::drawLogs(Console *console) {
 
 void Game::drawMapBorders(Console *console) {
   // top
-  for (int i = 0; i < MAXDISPLAYWORLDWIDTH; i++)
+  for (int i = 0; i < WORLDWIDTH + 2; i++)
     mvprintw(0, i, "+");
   // bottom
-  for (int i = 0; i < MAXDISPLAYWORLDWIDTH; i++)
-    mvprintw(MAXDISPLAYWORLDHEIGHT, i, "+");
+  for (int i = 0; i < WORLDWIDTH + 2; i++)
+    mvprintw(WORLDHEIGHT + 1, i, "+");
   // left
-  for (int i = 0; i < MAXDISPLAYWORLDHEIGHT; i++)
+  for (int i = 0; i < WORLDHEIGHT + 2; i++)
     mvprintw(i, 0, "+");
   // right
-  for (int i = 0; i < MAXDISPLAYWORLDHEIGHT; i++)
-    mvprintw(i, MAXDISPLAYWORLDWIDTH, "+");
+  for (int i = 0; i < WORLDHEIGHT + 2; i++)
+    mvprintw(i, WORLDWIDTH + 1, "+");
 }
 
 void Game::drawInterface(Console *console) {
@@ -213,8 +231,9 @@ void Game::drawInterface(Console *console) {
 
   mvprintw(console->getConsoleHeight() * 3 / 4 + 10,
            console->getConsoleWidth() * 3 / 4, "q - exit to menu");
-
-  mvprintw(2, console->getConsoleWidth() * 3 / 4 + 8, "Turn: ");
+  char turnText[15];
+  sprintf(turnText, "Turn: %d", this->currentTurn);
+  mvprintw(2, console->getConsoleWidth() * 3 / 4 + 8, turnText);
 
   // Drawing map borders
   this->drawMapBorders(console);
