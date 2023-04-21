@@ -5,7 +5,6 @@
 
 Game::Game() {
   this->world = nullptr;
-  this->nextTurn = false;
   this->continueGame = true;
   this->currentTurn = 0;
 }
@@ -21,14 +20,11 @@ void Game::startGame() {
   }
   
   while (this->continueGame) {
-
     this->drawInterface(console);
     this->world->draw();
-    if (this->nextTurn) {
-      this->world->nextTurn();
-      this->nextTurn = false;
-    }
+    this->world->firstActionTurn();
     this->getPlayerMove();
+    this->world->secondActionTurn();
   }
 
   return;
@@ -115,7 +111,6 @@ void Game::getPlayerMove() {
       case 0x42: {
         if(world->getHuman()->action(1, 0)){
           confirmMove = false;
-          this->nextTurn = true;
           }
           break;
       }
@@ -123,7 +118,6 @@ void Game::getPlayerMove() {
       case 0x44: {
         if(world->getHuman()->action(0, -1)){
         confirmMove = false;
-        this->nextTurn = true;
         }
         break;
       }
@@ -131,7 +125,6 @@ void Game::getPlayerMove() {
       case 0x43: {
         if(world->getHuman()->action(0, 1)){
         confirmMove = false;
-        this->nextTurn = true;
         }
         break;
       }
@@ -139,7 +132,6 @@ void Game::getPlayerMove() {
       case 0x41: {
         if(world->getHuman()->action(-1, 0)){
         confirmMove = false;
-        this->nextTurn = true;
         }
         break;
       }

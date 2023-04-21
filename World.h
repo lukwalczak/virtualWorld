@@ -4,7 +4,7 @@
 #include <vector>
 #include "Human.h"
 
-class World{
+class World {
 private:
   std::vector<Organism*> organisms;
   Human *human;
@@ -13,7 +13,9 @@ private:
 public:
   World();
   ~World();
-  void nextTurn();
+  void firstActionTurn();
+  void secondActionTurn();
   void draw();
   Human *getHuman();
+  void generateNewWorld();
 };
