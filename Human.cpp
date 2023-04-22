@@ -2,18 +2,18 @@
 #include "config.h"
 #include "World.h"
 
-Human::Human(int strength, int initiative, int posX, int posY, char organismChar, World &world) : 
-  Animal(strength, initiative, posX, posY, organismChar, world), abilityCooldown(0), abilityLastTime(0) {}
+Human::Human(int strength, int initiative, int posX, int posY, char organismChar, std::string fullOrganismName, World &world) : 
+  Animal(strength, initiative, posX, posY, organismChar, fullOrganismName, world), abilityCooldown(0), abilityLastTime(0) {}
 
 Human::~Human(){}
 
 int Human::action(int dx, int dy){
-
+  int startingX = this->posX, startingY = this->posY;
   if(dx && this->posX + dx >= 1 && this->posX + dx <= WORLDWIDTH){
     
     Organism *collidingOrganism = this->world.getOrganismAtXY(this->posX + dx, this->posY);
     if(collidingOrganism == nullptr || this->collision(collidingOrganism)){
-      this->posX += dx;
+      this->move(dx, dy);
       this->age++;
       this->deincrementAbilityLastTime();
       collidingOrganism = nullptr;
@@ -33,7 +33,7 @@ int Human::action(int dx, int dy){
     
     Organism *collidingOrganism = this->world.getOrganismAtXY(this->posX, this->posY + dy);
     if(collidingOrganism == nullptr || this->collision(collidingOrganism)){
-      this->posY += dy;
+      this->move(dx,dy);
       this->age++;
       this->deincrementAbilityLastTime();
       collidingOrganism = nullptr;
@@ -61,6 +61,7 @@ bool Human::collision(Organism *collidingOrganism){
 
 bool Human::fight(Organism *collidingOrganism){
   if(this->strength >= collidingOrganism->getStrenght()){
+    this->addFightLog(collidingOrganism, true);
     collidingOrganism->kill();
     this->world.removeOrganism(collidingOrganism);
     return true;
@@ -68,6 +69,7 @@ bool Human::fight(Organism *collidingOrganism){
     if(this->abilityLastTime > 0){
       return false;
     } else {
+      this->addFightLog(collidingOrganism, false);
       this->kill();
       this->world.removeOrganism(this);
       return false;
@@ -107,11 +109,11 @@ bool Human::checkMove(int dx, int dy){
 void Human::moveToAdjacent(){
   for(int i = -1; i <= 1; i++){
     if(this->world.getOrganismAtXY(this->posX + i, this->posY) == nullptr && this->checkMove(i,0)){
-      this->posX += i;
+      this->move(i,0);
       return;
     }
     if(this->world.getOrganismAtXY(this->posX, this->posY + i) == nullptr && this->checkMove(0, i)){
-      this->posY += i;
+      this->move(0,i);
       return;
     }
   }

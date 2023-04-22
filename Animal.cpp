@@ -3,18 +3,12 @@
 #include "ncurses.h"
 #include <iostream>
 #include <string.h>
+#include <string>
 #include "Organism.h"
 #include "World.h"
 
-Animal::Animal(int strength, int initiative, int posX, int posY,
-               char organismChar, World &world) : Organism(world) {
-  this->strength = strength;
-  this->initiative = initiative;
-  this->posX = posX;
-  this->posY = posY;
-  this->age = 0;
-  this->organismChar = organismChar;
-}
+Animal::Animal(int strength, int initiative, int posX, int posY, char organismChar, std::string fullOrganismName, World &world) :
+  Organism(strength, initiative, posX, posY, organismChar, fullOrganismName, world) {}
 
 Animal::~Animal(){}
 
@@ -32,7 +26,7 @@ void Animal::action() {
       direction = rand() % 2;
       // 1 go up 0 go down
       if (direction && this->posY - 1 >= 1) {
-        dy--;
+       dy--;
         moved = true;
       } else {
         dy++;
@@ -55,9 +49,10 @@ void Animal::action() {
   }
 
   Organism *collidingOrganism = this->world.getOrganismAtXY(this->posX+dx,this->posY+dy);
-  if(collidingOrganism == nullptr || this->collision(collidingOrganism)){
-    this->posX += dx;
-    this->posY += dy;
+  if(collidingOrganism == nullptr){
+    this->move(dx, dy);
+  } else if(this->collision(collidingOrganism)){
+    this->move(dx, dy);
   }
 
   collidingOrganism = nullptr;
@@ -81,17 +76,19 @@ bool Animal::collision(Organism *colidingOrganism) {
 
 void Animal::breed() const {}
 
-bool Animal::fight(Organism *colidingOrganism){
-  if(this->strength >= colidingOrganism->getStrenght()){
-    if(dynamic_cast<Human*>(colidingOrganism) != nullptr){
-      if(dynamic_cast<Human*>(colidingOrganism)->getAbilityLastTime() > 0){
+bool Animal::fight(Organism *collidingOrganism){
+  if(this->strength >= collidingOrganism->getStrenght()){
+    if(dynamic_cast<Human*>(collidingOrganism) != nullptr){
+      if(dynamic_cast<Human*>(collidingOrganism)->getAbilityLastTime() > 0){
         return 0;
       }
     }
-    colidingOrganism->kill();
-    this->world.removeOrganism(colidingOrganism);
+    this->addFightLog(collidingOrganism, true);
+    collidingOrganism->kill();
+    this->world.removeOrganism(collidingOrganism);
     return 1;
   }else{
+    this->addFightLog(collidingOrganism, false);
     this->kill();
     this->world.removeOrganism(this);
     return 0;
@@ -101,4 +98,28 @@ bool Animal::fight(Organism *colidingOrganism){
 
 void Animal::draw() const {
   mvprintw(this->posX, this->posY, &this->organismChar);
+}
+
+void Animal::move(int dx, int dy){
+  this->addMovedLog(dx, dy);
+  this->posX += dx;
+  this->posY += dy;
+}
+
+void Animal::addMovedLog(int dx, int dy){
+  std::string log = this->fullOrganismName + " moved to (" + std::to_string(this->posX+dx) + "," + std::to_string(this->posY+dy) + ")";
+  this->world.addLog(log); 
+}
+
+void Animal::addFightLog(Organism *collidingOrganism, bool won){
+  std::string log;
+  if(won){
+    log = this->fullOrganismName + " killed " +
+      collidingOrganism->getFullOrganismName() + " at (" +
+      std::to_string(collidingOrganism->getPosX()) + "," + std::to_string(collidingOrganism->getPosY()) + ")";
+  } else {
+    log = collidingOrganism->getFullOrganismName() + " was killed by " +
+      this->getFullOrganismName() + " at (" + std::to_string(this->posX) + "," + std::to_string(this->posY) + ")";
+  }
+  this->world.addLog(log);
 }

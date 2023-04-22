@@ -11,9 +11,12 @@
 #define HUMANCHAR 'H'
 #define HUMANSTARTINGX 1
 #define HUMANSTARTINGY 1
+#define HUMANFULLNAME "HUMAN"
 
 //wolf
 #define WOLFINITIATIVE 5
-#define WOLFSTR 99
+#define WOLFSTR 9
 #define WOLFCHAR 'W'
+#define WOLFFULLNAME "WOLF"
+
 #define FOXINITIATIVE 10

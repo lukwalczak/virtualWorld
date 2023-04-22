@@ -32,12 +32,12 @@ void World::draw() {
 }
 
 void World::generateNewWorld(){
-  this->human = new Human(HUMANSTR, HUMANINITIATIVE, HUMANSTARTINGX, HUMANSTARTINGY, HUMANCHAR, *this);
+  this->human = new Human(HUMANSTR, HUMANINITIATIVE, HUMANSTARTINGX, HUMANSTARTINGY, HUMANCHAR, HUMANFULLNAME, *this);
   this->organisms.push_back(this->human);
   
   int randX = rand() % WORLDWIDTH + 1;
   int randY = rand() % WORLDHEIGHT + 1;
-  Wolf *w = new Wolf(WOLFSTR, WOLFINITIATIVE, randX, randY, WOLFCHAR, *this);
+  Wolf *w = new Wolf(WOLFSTR, WOLFINITIATIVE, randX, randY, WOLFCHAR, WOLFFULLNAME, *this);
   this->organisms.push_back(w);
 }
 
@@ -77,4 +77,21 @@ void World::removeOrganism(Organism *organism){
   if(dynamic_cast<Human*>(organism) != nullptr){
     this->human = nullptr;
   }
+}
+
+void World::addLog(std::string log){
+  this->logs.insert(this->logs.begin(), log);
+}
+
+std::vector<std::string> World::getLogs(){
+  return this->logs;
+}
+
+std::vector<std::string> World::getLastLogs(){
+  if(this->logs.size() <= 32)
+    return this->logs;
+  std::vector<std::string>::const_iterator first = this->logs.begin();
+  std::vector<std::string>::const_iterator last = this->logs.begin() + 32;
+  std::vector<std::string> lastLogs(first, last);
+  return lastLogs;
 }

@@ -9,7 +9,7 @@ private:
   int abilityLastTime;
   void deincrementAbilityLastTime();
 public:
-  Human(int strength, int initiative, int posX, int posY, char organismChar, World &world);
+  Human(int strength, int initiative, int posX, int posY, char organismChar, std::string fullOrganismName, World &world);
   ~Human();
   bool useAbility();
   const int getAbilityLastTime() const;

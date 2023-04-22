@@ -197,6 +197,12 @@ void Game::drawLogs(Console *console) {
   for (int i = console->getConsoleHeight() * 7 / 10; i > 0; i--) {
     mvprintw(i, console->getConsoleWidth() - 5, "+");
   }
+
+  //drawing logs
+  std::vector<std::string> logs = this->world->getLastLogs();
+  for(int i = 0; i < logs.size(); i++){
+    mvprintw(5 + i , console->getConsoleWidth() * 3 / 4 + 2, logs[i].c_str());
+  }
 }
 
 void Game::drawMapBorders(Console *console) {
