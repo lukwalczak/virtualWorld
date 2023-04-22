@@ -14,6 +14,6 @@
 
 //wolf
 #define WOLFINITIATIVE 5
-#define WOLFSTR 9
+#define WOLFSTR 99
 #define WOLFCHAR 'W'
 #define FOXINITIATIVE 10

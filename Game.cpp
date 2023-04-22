@@ -19,15 +19,22 @@ void Game::startGame() {
     this->world = new World();
   }
   
-  while (this->continueGame) {
+  while (this->continueGame && this->world->isHumanAlive()) {
     this->drawInterface(console);
     this->world->draw();
     this->world->firstActionTurn();
     this->getPlayerMove();
     this->world->secondActionTurn();
   }
+
+  if(!this->world->isHumanAlive()){
+    std::cout << "DUPADUPAASODAIJSODAOISDDOSAI";
+    this->drawEndGame(console);
+    getch();
+  } 
+
+  this->world = nullptr;
   console = nullptr;
-  delete console;
   return;
 }
 
@@ -106,33 +113,35 @@ void Game::getPlayerMove() {
         break;
       }
       case 'p': {
-
+        if(this->world->getHuman()->useAbility()){
+          confirmMove = false;
+        }
         break;
       }
       // arrow down
       case 0x42: {
-        if(world->getHuman()->action(1, 0)){
+        if(this->world->getHuman()->action(1, 0)){
           confirmMove = false;
           }
           break;
       }
       // arrow left
       case 0x44: {
-        if(world->getHuman()->action(0, -1)){
+        if(this->world->getHuman()->action(0, -1)){
         confirmMove = false;
         }
         break;
       }
       // arrow right
       case 0x43: {
-        if(world->getHuman()->action(0, 1)){
+        if(this->world->getHuman()->action(0, 1)){
         confirmMove = false;
         }
         break;
       }
       // arrow up
       case 0x41: {
-        if(world->getHuman()->action(-1, 0)){
+        if(this->world->getHuman()->action(-1, 0)){
         confirmMove = false;
         }
         break;
@@ -233,4 +242,9 @@ void Game::drawInterface(Console *console) {
   this->drawMapBorders(console);
   // Drawing logs
   this->drawLogs(console);
+}
+
+void Game::drawEndGame(Console *console){
+  erase();
+  mvprintw(console->getConsoleHeight()/2, console->getConsoleWidth()/2, "Game ended, you died");
 }

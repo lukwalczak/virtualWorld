@@ -18,7 +18,7 @@ class Organism {
     const int getPosY() const;
     const int getAge() const;
     const char getOrganismChar() const;
-    virtual void collision(Organism *colidingOrganism) = 0;
+    virtual bool collision(Organism *colidingOrganism) = 0;
     virtual void action() = 0;
     virtual void draw() const = 0;
     const World &getWorld();

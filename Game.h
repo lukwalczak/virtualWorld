@@ -22,6 +22,6 @@ public:
   void getPlayerMove();
   void drawSettings();
   void drawMapBorders(Console *console);
-  void endGame(Console *console);
+  void drawEndGame(Console *console);
   void settings();
 };

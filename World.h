@@ -17,6 +17,7 @@ public:
   void secondActionTurn();
   void draw();
   Human *getHuman();
+  bool isHumanAlive() const;
   void generateNewWorld();
   Organism *getOrganismAtXY(int x, int y);
   void removeOrganism(Organism *organism);

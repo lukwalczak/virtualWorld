@@ -7,8 +7,6 @@
 World::World() {
   this->width = WORLDWIDTH;
   this->height = WORLDHEIGHT;
-  this->human = new Human(HUMANSTR, HUMANINITIATIVE, HUMANSTARTINGX, HUMANSTARTINGY, HUMANCHAR, *this);
-  this->organisms.push_back(this->human);
   this->generateNewWorld();
 }
 World::~World() {
@@ -20,6 +18,13 @@ World::~World() {
 
 Human *World::getHuman() { return this->human; }
 
+bool World::isHumanAlive() const { 
+  if(this->human != nullptr)
+    return true;
+  return false;
+
+}
+
 void World::draw() {
   for(Organism* o : this->organisms){
     o->draw();
@@ -27,6 +32,9 @@ void World::draw() {
 }
 
 void World::generateNewWorld(){
+  this->human = new Human(HUMANSTR, HUMANINITIATIVE, HUMANSTARTINGX, HUMANSTARTINGY, HUMANCHAR, *this);
+  this->organisms.push_back(this->human);
+  
   int randX = rand() % WORLDWIDTH + 1;
   int randY = rand() % WORLDHEIGHT + 1;
   Wolf *w = new Wolf(WOLFSTR, WOLFINITIATIVE, randX, randY, WOLFCHAR, *this);
@@ -66,4 +74,7 @@ Organism *World::getOrganismAtXY(int x, int y){
 
 void World::removeOrganism(Organism *organism){
   this->organisms.erase(std::remove(this->organisms.begin(), this->organisms.end(), organism), this->organisms.end());
+  if(dynamic_cast<Human*>(organism) != nullptr){
+    this->human = nullptr;
+  }
 }

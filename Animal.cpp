@@ -23,6 +23,7 @@ void Animal::action() {
   bool moved = false;
   int dx = 0;
   int dy = 0;
+  this->age++;
   while (!moved) {
     
     int direction = rand() % 2;
@@ -53,37 +54,49 @@ void Animal::action() {
     }
   }
 
-  Organism *colidingOrganism = this->world.getOrganismAtXY(this->posX+dx,this->posY+dy);
-  if(colidingOrganism == nullptr){
+  Organism *collidingOrganism = this->world.getOrganismAtXY(this->posX+dx,this->posY+dy);
+  if(collidingOrganism == nullptr){
     this->posX += dx;
     this->posY += dy;
-    return;
+  }else if(this->collision(collidingOrganism)){
+    this->posX += dx;
+    this->posY += dy;
   }
-  this->collision(colidingOrganism);
+  collidingOrganism = nullptr;
+  delete collidingOrganism;
   return;
 }
 
-void Animal::collision(Organism *colidingOrganism) {  
+bool Animal::collision(Organism *colidingOrganism) {  
 
   if(this->getOrganismChar() == colidingOrganism->getOrganismChar()){
     this->breed();
-    return;
+    return 0;
   }
 
-  this->fight(colidingOrganism);
-  return;
+  if(this->fight(colidingOrganism)){
+    return 1;
+  }
 
+  return 0;
 }
 
 void Animal::breed() const {}
 
-void Animal::fight(Organism *colidingOrganism){
+bool Animal::fight(Organism *colidingOrganism){
   if(this->strength >= colidingOrganism->getStrenght()){
+    if(dynamic_cast<Human*>(colidingOrganism) != nullptr){
+      if(dynamic_cast<Human*>(colidingOrganism)->getAbilityLastTime() > 0){
+        return 0;
+      }
+    }
     colidingOrganism->kill();
     this->world.removeOrganism(colidingOrganism);
+    return 1;
   }else{
     this->kill();
     this->world.removeOrganism(this);
+    return 0;
   }
 
 }
