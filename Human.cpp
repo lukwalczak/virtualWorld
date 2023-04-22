@@ -100,16 +100,6 @@ void Human::deincrementAbilityLastTime() {
   }
 }
 
-bool Human::checkMove(int dx, int dy){
-  if(dx && this->posX + dx >= 1 && this->posX + dx <= WORLDWIDTH){
-    return 1;
-  }
-  if(dy && this->posY + dy >= 1 && this->posY + dy <= WORLDHEIGHT){
-    return 1;
-  }
-  return 0;
-}
-
 void Human::moveToAdjacent(){
   for(int i = -1; i <= 1; i++){
     if(this->world.getOrganismAtXY(this->posX + i, this->posY) == nullptr && this->checkMove(i,0)){

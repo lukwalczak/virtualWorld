@@ -5,7 +5,7 @@
 #define WORLDHEIGHT 20
 
 //player
-#define HUMANSTR 4
+#define HUMANSTR 5
 #define HUMANINITIATIVE 4
 #define HUMANABILITYCOOLDOWN 5
 #define HUMANCHAR 'H'
@@ -43,3 +43,28 @@
 #define TURTLECHAR 'T'
 #define TURTLEFULLNAME "TURTLE"
 #define TURTLEDEFLECTIONTRESHOLD 5
+
+//grass
+#define GRASSSTR 0
+#define GRASSCHAR 'G'
+#define GRASSFULLNAME "GRASS"
+
+//pineborsch
+#define PINEBORSCHSTR 10
+#define PINEBORSCHCHAR 'P'
+#define PINEBORSCHFULLNAME "PINE BORSCH"
+
+//nightshade
+#define NIGHTSHADESTR 99
+#define NIGHTSHADECHAR 'N'
+#define NIGHTSHADEFULLNAME "NIGHTSHADE"
+
+//dandelion
+#define DANDELIONSTR 0
+#define DANDELIONCHAR 'D'
+#define DANDELIONFULLNAME "DANDELION"
+
+//guarana
+#define GUARANASTR 0
+#define GUARANACHAR 'G'
+#define GUARANAFULLNAME "GUARANA"

@@ -25,5 +25,6 @@ class Organism {
     virtual void action() = 0;
     void draw() const;
     const World &getWorld();
+    virtual bool checkMove(int dx, int dy);
     virtual void kill();
 };

@@ -1,5 +1,6 @@
 #include "World.h"
 #include "Animals/Animals.h"
+#include "Plants/Plants.h"
 #include "Console.h"
 #include "config.h"
 #include <algorithm>
@@ -95,6 +96,16 @@ void World::generateAnimals() {
                            TURTLECHAR, TURTLEFULLNAME, *this);
     this->organisms.push_back(a);
   }
+  for (int i = 0; i < (rand() % 10) + 1; i++) {
+    while (this->getOrganismAtXY(randX, randY) != nullptr) {
+      randX = rand() % WORLDWIDTH + 1;
+      randY = rand() % WORLDHEIGHT + 1;
+    }
+    Grass *a = new Grass(GRASSSTR, randX, randY,
+                           GRASSCHAR, GRASSFULLNAME, *this);
+    this->organisms.push_back(a);
+  }
+
 }
 
 // turn of animals that have greater initiative than human

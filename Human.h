@@ -17,5 +17,4 @@ public:
   bool fight(Organism *collidingOrganism) override;
   bool collision(Organism *collidingOrganism) override;
   void moveToAdjacent();
-  bool checkMove(int dx, int dy);
 };
