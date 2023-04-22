@@ -36,6 +36,7 @@ void World::clearWorld(){
   }
   this->organisms.clear();
   this->logs.clear();
+  this->human = nullptr;
 }
 
 void World::generateNewWorld() {
