@@ -17,6 +17,7 @@ void Game::startGame() {
 
   if (this->world == nullptr) {
     this->world = new World();
+    world->generateNewWorld();
   }
  
   //organisms with higher initiative have bonus round

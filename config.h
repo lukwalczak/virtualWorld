@@ -19,4 +19,26 @@
 #define WOLFCHAR 'W'
 #define WOLFFULLNAME "WOLF"
 
-#define FOXINITIATIVE 10
+//sheep
+#define SHEEPINITIATIVE 4
+#define SHEEPSTR 4
+#define SHEEPCHAR 'S'
+#define SHEEPFULLNAME "SHEEP"
+
+//FOX
+#define FOXINITIATIVE 7
+#define FOXSTR 3
+#define FOXCHAR 'F'
+#define FOXFULLNAME "FOX"
+
+//antelope
+#define ANTELOPEINITIATIVE 5
+#define ANTELOPESTR 4
+#define ANTELOPECHAR 'A'
+#define ANTELOPEFULLNAME "ANTELOPE"
+
+//turtle
+#define TURTLEINITIATIVE 1
+#define TURTLESTR 2
+#define TURTLECHAR 'T'
+#define TURTLEFULLNAME "TURTLE"

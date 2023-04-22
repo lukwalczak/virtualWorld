@@ -11,6 +11,7 @@ private:
   Human *human;
   int width;
   int height;
+  void generateAnimals();
 public:
   World();
   ~World();
