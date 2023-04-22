@@ -54,9 +54,6 @@ void Animal::action() {
   } else if(this->collision(collidingOrganism)){
     this->move(dx, dy);
   }
-
-  collidingOrganism = nullptr;
-  delete collidingOrganism;
   return;
 }
 

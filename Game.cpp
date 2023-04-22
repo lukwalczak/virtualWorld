@@ -4,7 +4,7 @@
 #include <ncurses.h>
 
 Game::Game() {
-  this->world = nullptr;
+  this->world = new World(this->currentTurn);
   this->continueGame = true;
   this->currentTurn = 1;
 }
@@ -12,14 +12,11 @@ Game::Game() {
 Game::~Game() { delete this->world; }
 
 void Game::startGame() {
+  this->currentTurn = 1;
   Console *console = Console::getInstance();
   this->continueGame = true;
 
-  if (this->world == nullptr) {
-    this->world = new World(this->currentTurn);
-    world->generateNewWorld();
-  }
- 
+  world->generateNewWorld();
 
   while (this->continueGame && this->world->isHumanAlive()) {
     this->world->startTurn();
@@ -36,10 +33,8 @@ void Game::startGame() {
   if(!this->world->isHumanAlive()){
     this->drawEndGame(console);
     getch();
-  } 
+  }
 
-  this->world = nullptr;
-  console = nullptr;
   return;
 }
 
@@ -82,8 +77,6 @@ void Game::menu() {
         break;
       }
       case 4: {
-        console = nullptr;
-        delete console;
         return;
         break;
       }

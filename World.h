@@ -12,6 +12,7 @@ private:
   int width;
   int height;
   void generateAnimals();
+  void clearWorld();
   int &gameTurn;
 public:
   World(int &gameTurn);

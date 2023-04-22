@@ -10,9 +10,10 @@ World::World(int &gameTurn) : gameTurn(gameTurn) {
 }
 World::~World() {
   for (Organism *o : this->organisms) {
-    o = nullptr;
     delete o;
   }
+  this->organisms.clear();
+  this->logs.clear();
 }
 
 Human *World::getHuman() { return this->human; }
@@ -29,7 +30,16 @@ void World::draw() {
   }
 }
 
+void World::clearWorld(){
+  for (Organism *o : this->organisms) {
+    delete o;
+  }
+  this->organisms.clear();
+  this->logs.clear();
+}
+
 void World::generateNewWorld() {
+  this->clearWorld(); 
   this->human = new Human(HUMANSTR, HUMANINITIATIVE, HUMANSTARTINGX,
                           HUMANSTARTINGY, HUMANCHAR, HUMANFULLNAME, *this);
   this->organisms.push_back(this->human);
@@ -90,11 +100,7 @@ void World::generateAnimals() {
 void World::firstActionTurn() {
   for (Organism *o : this->organisms) {
     if (dynamic_cast<Human *>(o) == nullptr) {
-      if (o->getInitiative() > HUMANINITIATIVE ||
-          o->getInitiative() == HUMANINITIATIVE) {
-        if (this->isHumanAlive() && o->getAge() > this->human->getAge()) {
-          o->action();
-        }
+      if (o->getInitiative() > HUMANINITIATIVE || ( o->getInitiative() == HUMANINITIATIVE && this->isHumanAlive() && o->getAge() > this->human->getAge())) {
         o->action();
       }
     }
@@ -105,11 +111,7 @@ void World::firstActionTurn() {
 void World::turn() {
   for (Organism *o : this->organisms) {
     if (dynamic_cast<Human *>(o) == nullptr) {
-      if (o->getInitiative() < HUMANINITIATIVE ||
-          o->getInitiative() == HUMANINITIATIVE) {
-        if (this->isHumanAlive() && o->getAge() <= this->human->getAge()) {
-          o->action();
-        }
+      if (o->getInitiative() < HUMANINITIATIVE || ( o->getInitiative() == HUMANINITIATIVE && this->isHumanAlive() && o->getAge() <= this->human->getAge())) {
         o->action();
       }
     }
@@ -117,8 +119,7 @@ void World::turn() {
 }
 
 void World::sortOrganisms() {
-  std::sort(this->organisms.begin(), this->organisms.end(),
-            std::greater<Organism *>());
+  std::sort(this->organisms.begin(), this->organisms.end(), std::greater<Organism *>());
 }
 
 Organism *World::getOrganismAtXY(int x, int y) {
