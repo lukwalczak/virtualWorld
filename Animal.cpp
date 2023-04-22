@@ -97,7 +97,8 @@ bool Animal::fight(Organism *collidingOrganism){
 }
 
 void Animal::draw() const {
-  mvprintw(this->posX, this->posY, &this->organismChar);
+  std::string temp(1,this->organismChar);
+  mvprintw(this->posX, this->posY, temp.c_str());
 }
 
 void Animal::move(int dx, int dy){

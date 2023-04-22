@@ -18,17 +18,18 @@ void Game::startGame() {
   if (this->world == nullptr) {
     this->world = new World();
   }
-  
+ 
+  //organisms with higher initiative have bonus round
+  this->world->firstActionTurn();
+
   while (this->continueGame && this->world->isHumanAlive()) {
     this->drawInterface(console);
     this->world->draw();
-    this->world->firstActionTurn();
     this->getPlayerMove();
-    this->world->secondActionTurn();
+    this->world->turn();
   }
 
   if(!this->world->isHumanAlive()){
-    std::cout << "DUPADUPAASODAIJSODAOISDDOSAI";
     this->drawEndGame(console);
     getch();
   } 

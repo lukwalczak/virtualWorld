@@ -53,14 +53,16 @@ void World::firstActionTurn() {
 }
 
 //turn of animals that have less initiative than human
-void World::secondActionTurn(){
+void World::turn(){
   for(Organism *o : this->organisms){
     if(dynamic_cast<Human*>(o) == nullptr){
-      if(o->getInitiative() < HUMANINITIATIVE || ( o->getInitiative() == HUMANINITIATIVE && o->getAge() <= this->human->getAge())){
         o->action();
-      }
     }
   }
+}
+
+void World::sortOrganisms(){
+
 }
 
 Organism *World::getOrganismAtXY(int x, int y){

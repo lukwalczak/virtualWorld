@@ -15,7 +15,8 @@ public:
   World();
   ~World();
   void firstActionTurn();
-  void secondActionTurn();
+  void turn();
+  void sortOrganisms();
   void draw();
   Human *getHuman();
   bool isHumanAlive() const;
