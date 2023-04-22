@@ -14,4 +14,8 @@ public:
   bool useAbility();
   const int getAbilityLastTime() const;
   int action(int dx, int dy);
+  bool fight(Organism *collidingOrganism) override;
+  bool collision(Organism *collidingOrganism) override;
+  void moveToAdjacent();
+  bool checkMove(int dx, int dy);
 };

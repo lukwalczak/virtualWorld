@@ -9,7 +9,7 @@ Human::~Human(){}
 
 int Human::action(int dx, int dy){
 
-  if(dx && this->posX + dx >= 1 && this->posX + dx <= WORLDWIDTH){
+  if(this->checkMove(dx,dy)){
     
     Organism *collidingOrganism = this->world.getOrganismAtXY(this->posX + dx, this->posY);
     
@@ -20,13 +20,16 @@ int Human::action(int dx, int dy){
       collidingOrganism = nullptr;
       delete collidingOrganism;
       return 1;
-    } else{
+    } else if(this->abilityLastTime > 0){
+      this->moveToAdjacent(); 
+      return 1;
+    } else {
       return 1;
     }
 
   }
   
-  if(dy && this->posY + dy >= 1 && this->posY + dy <= WORLDHEIGHT){
+  if(this->checkMove(dx,dy)){
     
     Organism *collidingOrganism = this->world.getOrganismAtXY(this->posX, this->posY + dy);
     
@@ -37,6 +40,9 @@ int Human::action(int dx, int dy){
       collidingOrganism = nullptr;
       delete collidingOrganism;
       return 1;
+    } else if(this->abilityLastTime > 0){
+      this->moveToAdjacent();
+      return 1;
     }else{
       return 1;
     }
@@ -44,6 +50,29 @@ int Human::action(int dx, int dy){
   }
   
   return 0;
+}
+
+bool Human::collision(Organism *collidingOrganism){
+  if(this->fight(collidingOrganism)){
+    return true;
+  }
+  return false;
+}
+
+bool Human::fight(Organism *collidingOrganism){
+  if(this->strength >= collidingOrganism->getStrenght()){
+    collidingOrganism->kill();
+    this->world.removeOrganism(collidingOrganism);
+    return true;
+  } else {
+    if(this->abilityLastTime > 0){
+      return false;
+    } else {
+      this->kill();
+      this->world.removeOrganism(this);
+      return false;
+    }
+  }
 }
 
 const int Human::getAbilityLastTime() const { return this->abilityLastTime; }
@@ -63,4 +92,28 @@ void Human::deincrementAbilityLastTime() {
   }else if(this->abilityCooldown > 0){
     this->abilityCooldown--;
   }
+}
+
+bool Human::checkMove(int dx, int dy){
+  if(dx && this->posX + dx >= 1 && this->posX + dx <= WORLDWIDTH){
+    return 1;
+  }
+  if(dy && this->posY + dy >= 1 && this->posY + dy <= WORLDHEIGHT){
+    return 1;
+  }
+  return 0;
+}
+
+void Human::moveToAdjacent(){
+  for(int i = -1; i <= 1; i++){
+    if(this->world.getOrganismAtXY(this->posX + i, this->posY) == nullptr && this->checkMove(i,0)){
+      this->posX += i;
+      return;
+    }
+    if(this->world.getOrganismAtXY(this->posX, this->posY + i) == nullptr && this->checkMove(0, i)){
+      this->posY += i;
+      return;
+    }
+  }
+
 }
