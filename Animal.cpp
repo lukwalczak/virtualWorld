@@ -22,25 +22,25 @@ void Animal::action() {
     
     int direction = rand() % 2;
     
-    if (direction && (this->posY - 1 >= 1 || this->posY + 1 <= WORLDHEIGHT)) {
+    if (direction && (this->posY - 1 >= 1 || this->posY < WORLDHEIGHT)) {
       direction = rand() % 2;
       // 1 go up 0 go down
       if (direction && this->posY - 1 >= 1) {
        dy--;
         moved = true;
-      } else if(this->posY + 1 <= WORLDHEIGHT ){
+      } else if(!direction && this->posY < WORLDHEIGHT ){
         dy++;
         moved = true;
       }
     }
 
-    if (!direction && (this->posX - 1 >= 1 || this->posX + 1 <= WORLDWIDTH)) {
+    if (!direction && (this->posX - 1 >= 1 || this->posX  < WORLDWIDTH)) {
       //1 go left 0 go right
       direction = rand() % 2;
       if(direction && this->posX - 1 >= 1){
         dx--;
         moved = true;
-      }else if(this->posX <= WORLDWIDTH){
+      }else if(!direction && this->posX < WORLDWIDTH){
         dx++;
         moved = true;
       }
@@ -98,11 +98,6 @@ bool Animal::fight(Organism *collidingOrganism){
 }
 
 bool Animal::didReflect(Organism *attackingOrganism) { return false;}
-
-void Animal::draw() const {
-  std::string temp(1,this->organismChar);
-  mvprintw(this->posX, this->posY, temp.c_str());
-}
 
 void Animal::move(int dx, int dy){
   this->addMovedLog(dx, dy);

@@ -7,7 +7,7 @@ Human::Human(int strength, int initiative, int posX, int posY, char organismChar
 
 Human::~Human(){}
 
-int Human::action(int dx, int dy){
+int Human::action(int dy, int dx){
   int startingX = this->posX, startingY = this->posY;
   if(dx && this->posX + dx >= 1 && this->posX + dx <= WORLDWIDTH){
     

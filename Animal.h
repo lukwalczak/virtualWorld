@@ -7,7 +7,6 @@ public:
   virtual ~Animal();
   virtual bool collision(Organism *colidingOrganism) override;
   virtual void action() override;
-  virtual void draw() const override;
   virtual void breed() const;
   virtual bool fight(Organism *colidingOrganism);
   virtual bool didReflect(Organism *attackingOrganism);

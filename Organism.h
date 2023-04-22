@@ -23,7 +23,7 @@ class Organism {
     const char getOrganismChar() const;
     virtual bool collision(Organism *colidingOrganism) = 0;
     virtual void action() = 0;
-    virtual void draw() const = 0;
+    void draw() const;
     const World &getWorld();
     virtual void kill();
 };
