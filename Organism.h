@@ -8,10 +8,10 @@ class Organism {
     int posY;
     int age;
     char organismChar;
-    World *world;
+    World &world;
   public:
-    Organism(World *world);
-    ~Organism();
+    Organism(World &world);
+    virtual ~Organism();
     const int getStrenght() const;
     const int getInitiative() const;
     const int getPosX() const;

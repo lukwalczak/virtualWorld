@@ -8,6 +8,7 @@ private:
   //how long ability lasts
   int abilityLastTime;
 public:
-  Human(int strength, int initiative, int posX, int posY, char organismChar, World *world);
+  Human(int strength, int initiative, int posX, int posY, char organismChar, World &world);
+  ~Human();
   int action(int dx, int dy);
 };

@@ -7,7 +7,7 @@
 #include "World.h"
 
 Animal::Animal(int strength, int initiative, int posX, int posY,
-               char organismChar, World *world) : Organism(world) {
+               char organismChar, World &world) : Organism(world) {
   this->strength = strength;
   this->initiative = initiative;
   this->posX = posX;
@@ -15,6 +15,8 @@ Animal::Animal(int strength, int initiative, int posX, int posY,
   this->age = 0;
   this->organismChar = organismChar;
 }
+
+Animal::~Animal(){}
 
 void Animal::action() {
   // go up/down if direction is 1 otherwise left/right
@@ -51,7 +53,7 @@ void Animal::action() {
     }
   }
 
-  Organism *colidingOrganism = this->world->getOrganismAtXY(this->posX+dx,this->posY+dy);
+  Organism *colidingOrganism = this->world.getOrganismAtXY(this->posX+dx,this->posY+dy);
   if(colidingOrganism == nullptr){
     this->posX += dx;
     this->posY += dy;
@@ -78,10 +80,10 @@ void Animal::breed() const {}
 void Animal::fight(Organism *colidingOrganism){
   if(this->strength >= colidingOrganism->getStrenght()){
     colidingOrganism->kill();
-    this->world->removeOrganism(colidingOrganism);
+    this->world.removeOrganism(colidingOrganism);
   }else{
     this->kill();
-    this->world->removeOrganism(this);
+    this->world.removeOrganism(this);
   }
 
 }
