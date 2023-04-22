@@ -27,5 +27,6 @@ bool Organism::checkMove(int dx, int dy){
   }
   return 0;
 }
-void Organism::kill() {
+bool Organism::collision(Organism *colidingOrganism){
+  return false;
 }

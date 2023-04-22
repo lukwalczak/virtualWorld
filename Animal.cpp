@@ -6,11 +6,16 @@
 #include <string>
 #include "Organism.h"
 #include "World.h"
+#include "Plant.h"
 
 Animal::Animal(int strength, int initiative, int posX, int posY, char organismChar, std::string fullOrganismName, World &world) :
   Organism(strength, initiative, posX, posY, organismChar, fullOrganismName, world) {}
 
 Animal::~Animal(){}
+
+void Animal::increaseStrenght(){
+  this->strength+=3;
+}
 
 void Animal::action() {
   // go up/down if direction is 1 otherwise left/right
@@ -84,13 +89,14 @@ bool Animal::fight(Organism *collidingOrganism){
       this->addReflectionLog(collidingOrganism); 
       return 0;
     }
+    if(dynamic_cast<Plant*>(collidingOrganism) != nullptr){
+      dynamic_cast<Plant*>(collidingOrganism)->collision(this);
+    }
     this->addFightLog(collidingOrganism, true);
-    collidingOrganism->kill();
     this->world.removeOrganism(collidingOrganism);
     return 1;
   }else{
     this->addFightLog(collidingOrganism, false);
-    this->kill();
     this->world.removeOrganism(this);
     return 0;
   }

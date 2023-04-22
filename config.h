@@ -46,7 +46,7 @@
 
 //grass
 #define GRASSSTR 0
-#define GRASSCHAR 'G'
+#define GRASSCHAR '.'
 #define GRASSFULLNAME "GRASS"
 
 //pineborsch

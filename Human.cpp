@@ -66,7 +66,6 @@ bool Human::fight(Organism *collidingOrganism){
       return false;
     }
     this->addFightLog(collidingOrganism, true);
-    collidingOrganism->kill();
     this->world.removeOrganism(collidingOrganism);
     return true;
   } else {
@@ -74,7 +73,6 @@ bool Human::fight(Organism *collidingOrganism){
       return false;
     } else {
       this->addFightLog(collidingOrganism, false);
-      this->kill();
       this->world.removeOrganism(this);
       return false;
     }

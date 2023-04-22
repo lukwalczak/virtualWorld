@@ -5,6 +5,7 @@ class Animal : public Organism {
 public:
   Animal(int strenght, int initiative, int posX, int posY, char organismChar, std::string fullOrganismName, World &world);
   virtual ~Animal();
+  void increaseStrenght();
   virtual bool collision(Organism *colidingOrganism) override;
   virtual void action() override;
   virtual void breed() const;

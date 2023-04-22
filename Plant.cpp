@@ -18,8 +18,3 @@ void Plant::action(){
     }
   }
 }
-
-bool Plant::collision(Organism *collidingOrganism){
-  return false;
-}
-

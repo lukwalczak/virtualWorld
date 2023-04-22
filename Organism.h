@@ -21,10 +21,9 @@ class Organism {
     const int getAge() const;
     const std::string getFullOrganismName() const;
     const char getOrganismChar() const;
-    virtual bool collision(Organism *colidingOrganism) = 0;
+    virtual bool collision(Organism *colidingOrganism);
     virtual void action() = 0;
     void draw() const;
     const World &getWorld();
     virtual bool checkMove(int dx, int dy);
-    virtual void kill();
 };
