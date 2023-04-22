@@ -6,4 +6,5 @@ public:
   Turtle(int strength, int initiative, int posX, int posY, char organismChar, std::string fullOrganismName, World &world);
   ~Turtle();
   void action() override;
+  bool didReflect(Organism *attackingOrganism) override;
 };

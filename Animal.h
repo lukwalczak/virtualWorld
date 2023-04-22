@@ -10,7 +10,9 @@ public:
   virtual void draw() const override;
   virtual void breed() const;
   virtual bool fight(Organism *colidingOrganism);
+  virtual bool didReflect(Organism *attackingOrganism);
   virtual void addMovedLog(int dx, int dy);
   virtual void addFightLog(Organism *collidingOrganism, bool won);
+  virtual void addReflectionLog(Organism *defendingOrganism);
   virtual void move(int dx, int dy);
 };

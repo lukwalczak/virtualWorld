@@ -83,6 +83,10 @@ bool Animal::fight(Organism *collidingOrganism){
         return 0;
       }
     }
+    if(dynamic_cast<Animal*>(collidingOrganism) != nullptr && dynamic_cast<Animal*>(collidingOrganism)->didReflect(this)){
+      this->addReflectionLog(collidingOrganism); 
+      return 0;
+    }
     this->addFightLog(collidingOrganism, true);
     collidingOrganism->kill();
     this->world.removeOrganism(collidingOrganism);
@@ -95,6 +99,8 @@ bool Animal::fight(Organism *collidingOrganism){
   }
 
 }
+
+bool Animal::didReflect(Organism *attackingOrganism) { return false;}
 
 void Animal::draw() const {
   std::string temp(1,this->organismChar);
@@ -122,5 +128,11 @@ void Animal::addFightLog(Organism *collidingOrganism, bool won){
     log = this->fullOrganismName + " was killed by " +
       collidingOrganism->getFullOrganismName() + " at (" + std::to_string(this->posX) + "," + std::to_string(this->posY) + ")";
   }
+  this->world.addLog(log);
+}
+
+void Animal::addReflectionLog(Organism *defendingOrganism){
+  std::string log;
+  log = defendingOrganism->getFullOrganismName() + " reflected " + this->getFullOrganismName() + " attack";
   this->world.addLog(log);
 }

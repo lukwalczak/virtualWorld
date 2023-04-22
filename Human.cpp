@@ -61,6 +61,10 @@ bool Human::collision(Organism *collidingOrganism){
 
 bool Human::fight(Organism *collidingOrganism){
   if(this->strength >= collidingOrganism->getStrenght()){
+    if(dynamic_cast<Animal*>(collidingOrganism) != nullptr && dynamic_cast<Animal*>(collidingOrganism)->didReflect(this)){
+      this->addReflectionLog(collidingOrganism); 
+      return false;
+    }
     this->addFightLog(collidingOrganism, true);
     collidingOrganism->kill();
     this->world.removeOrganism(collidingOrganism);
