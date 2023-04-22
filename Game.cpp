@@ -28,6 +28,7 @@ void Game::startGame() {
     this->world->draw();
     this->getPlayerMove();
     this->world->turn();
+    this->world->firstActionTurn();
   }
 
   if(!this->world->isHumanAlive()){

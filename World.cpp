@@ -103,7 +103,9 @@ void World::firstActionTurn() {
 void World::turn() {
   for (Organism *o : this->organisms) {
     if (dynamic_cast<Human *>(o) == nullptr) {
-      o->action();
+      if( o->getInitiative() < HUMANINITIATIVE || (o->getInitiative() == HUMANINITIATIVE && o->getAge() <= this->human->getAge())){
+        o->action();
+      }
     }
   }
 }
