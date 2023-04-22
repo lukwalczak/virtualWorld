@@ -119,8 +119,8 @@ void Animal::addFightLog(Organism *collidingOrganism, bool won){
       collidingOrganism->getFullOrganismName() + " at (" +
       std::to_string(collidingOrganism->getPosX()) + "," + std::to_string(collidingOrganism->getPosY()) + ")";
   } else {
-    log = collidingOrganism->getFullOrganismName() + " was killed by " +
-      this->getFullOrganismName() + " at (" + std::to_string(this->posX) + "," + std::to_string(this->posY) + ")";
+    log = this->fullOrganismName + " was killed by " +
+      collidingOrganism->getFullOrganismName() + " at (" + std::to_string(this->posX) + "," + std::to_string(this->posY) + ")";
   }
   this->world.addLog(log);
 }
