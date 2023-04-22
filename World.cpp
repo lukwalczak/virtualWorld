@@ -118,8 +118,22 @@ void World::turn() {
   }
 }
 
+bool World::compareOrganisms(Organism *o1, Organism *o2){
+  if(o1->getInitiative() > o2->getInitiative()){
+    return true;
+  }else if( o1->getInitiative() < o2->getInitiative()){
+    return false;
+  }else{
+    if(o1->getAge() > o2->getAge()){
+      return true;
+    }else{
+      return false;
+    }
+  }
+}
+
 void World::sortOrganisms() {
-  std::sort(this->organisms.begin(), this->organisms.end(), std::greater<Organism *>());
+  std::sort(this->organisms.begin(), this->organisms.end(), this->compareOrganisms);
 }
 
 Organism *World::getOrganismAtXY(int x, int y) {

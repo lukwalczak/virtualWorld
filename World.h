@@ -27,6 +27,7 @@ public:
   Organism *getOrganismAtXY(int x, int y);
   void removeOrganism(Organism *organism);
   void addLog(std::string log);
+  static bool compareOrganisms(Organism *o1, Organism *o2);
   std::vector<std::string> getLogs();
   std::vector<std::string> getLastLogs();
   void startTurn();
