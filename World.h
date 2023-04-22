@@ -12,8 +12,9 @@ private:
   int width;
   int height;
   void generateAnimals();
+  int &gameTurn;
 public:
-  World();
+  World(int &gameTurn);
   ~World();
   void firstActionTurn();
   void turn();
@@ -27,4 +28,6 @@ public:
   void addLog(std::string log);
   std::vector<std::string> getLogs();
   std::vector<std::string> getLastLogs();
+  void startTurn();
+  void endTurn();
 };

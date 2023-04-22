@@ -6,7 +6,7 @@
 Game::Game() {
   this->world = nullptr;
   this->continueGame = true;
-  this->currentTurn = 0;
+  this->currentTurn = 1;
 }
 
 Game::~Game() { delete this->world; }
@@ -16,19 +16,21 @@ void Game::startGame() {
   this->continueGame = true;
 
   if (this->world == nullptr) {
-    this->world = new World();
+    this->world = new World(this->currentTurn);
     world->generateNewWorld();
   }
  
-  //organisms with higher initiative have bonus round
-  this->world->firstActionTurn();
 
   while (this->continueGame && this->world->isHumanAlive()) {
+    this->world->startTurn();
     this->drawInterface(console);
     this->world->draw();
-    this->getPlayerMove();
-    this->world->turn();
     this->world->firstActionTurn();
+    if(this->world->isHumanAlive())
+      this->getPlayerMove();
+    this->world->turn();
+    this->world->endTurn();
+    this->currentTurn++;
   }
 
   if(!this->world->isHumanAlive()){
@@ -152,7 +154,6 @@ void Game::getPlayerMove() {
       }
     }
   }
-  this->currentTurn++;
 }
 
 void Game::drawMenu(int &cursorPosition, Console *console) {
@@ -203,8 +204,8 @@ void Game::drawLogs(Console *console) {
 
   //drawing logs
   std::vector<std::string> logs = this->world->getLastLogs();
-  for(int i = 0; i < logs.size(); i++){
-    mvprintw(5 + i , console->getConsoleWidth() * 3 / 4 + 2, logs[i].c_str());
+  for(int i = logs.size(); i > 0; i--){
+    mvprintw(4 + i , console->getConsoleWidth() * 3 / 4 + 2, logs[i].c_str());
   }
 }
 

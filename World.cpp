@@ -4,7 +4,7 @@
 #include "config.h"
 #include <algorithm>
 
-World::World() {
+World::World(int &gameTurn) : gameTurn(gameTurn) {
   this->width = WORLDWIDTH;
   this->height = WORLDHEIGHT;
 }
@@ -91,8 +91,10 @@ void World::firstActionTurn() {
   for (Organism *o : this->organisms) {
     if (dynamic_cast<Human *>(o) == nullptr) {
       if (o->getInitiative() > HUMANINITIATIVE ||
-          (o->getInitiative() == HUMANINITIATIVE &&
-           o->getAge() > this->human->getAge())) {
+          o->getInitiative() == HUMANINITIATIVE) {
+        if (this->isHumanAlive() && o->getAge() > this->human->getAge()) {
+          o->action();
+        }
         o->action();
       }
     }
@@ -103,14 +105,21 @@ void World::firstActionTurn() {
 void World::turn() {
   for (Organism *o : this->organisms) {
     if (dynamic_cast<Human *>(o) == nullptr) {
-      if( o->getInitiative() < HUMANINITIATIVE || (o->getInitiative() == HUMANINITIATIVE && o->getAge() <= this->human->getAge())){
+      if (o->getInitiative() < HUMANINITIATIVE ||
+          o->getInitiative() == HUMANINITIATIVE) {
+        if (this->isHumanAlive() && o->getAge() <= this->human->getAge()) {
+          o->action();
+        }
         o->action();
       }
     }
   }
 }
 
-void World::sortOrganisms() {}
+void World::sortOrganisms() {
+  std::sort(this->organisms.begin(), this->organisms.end(),
+            std::greater<Organism *>());
+}
 
 Organism *World::getOrganismAtXY(int x, int y) {
   for (Organism *o : this->organisms) {
@@ -122,12 +131,24 @@ Organism *World::getOrganismAtXY(int x, int y) {
 }
 
 void World::removeOrganism(Organism *organism) {
-  this->organisms.erase(
-      std::remove(this->organisms.begin(), this->organisms.end(), organism),
-      this->organisms.end());
   if (dynamic_cast<Human *>(organism) != nullptr) {
     this->human = nullptr;
   }
+  this->organisms.erase(
+      std::remove(this->organisms.begin(), this->organisms.end(), organism),
+      this->organisms.end()); 
+}
+
+void World::startTurn() {
+  this->sortOrganisms();
+  this->addLog("-----------------");
+  std::string log = "Start of turn: " + std::to_string(this->gameTurn);
+  this->addLog(log);
+}
+
+void World::endTurn() {
+  std::string log = "End of turn: " + std::to_string(this->gameTurn);
+  this->addLog(log);
 }
 
 void World::addLog(std::string log) {

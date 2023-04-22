@@ -26,4 +26,5 @@ class Organism {
     virtual void draw() const = 0;
     const World &getWorld();
     virtual void kill();
+    bool operator<(const Organism  &other) const;
 };
