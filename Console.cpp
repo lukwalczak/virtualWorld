@@ -11,7 +11,7 @@ Console::Console(){
 }
 
 Console::~Console(){
-  delete this;
+  delete this->pConsole;
 }
 
 const int &Console::getConsoleHeight() const { return this->maxY; }

@@ -26,7 +26,8 @@ void Game::startGame() {
     this->getPlayerMove();
     this->world->secondActionTurn();
   }
-
+  console = nullptr;
+  delete console;
   return;
 }
 
@@ -70,6 +71,7 @@ void Game::menu() {
       }
       case 4: {
         console = nullptr;
+        delete console;
         return;
         break;
       }

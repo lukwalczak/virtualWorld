@@ -60,11 +60,11 @@ void Animal::action() {
     return;
   }
   this->collision(colidingOrganism);
-
+  return;
 }
 
 void Animal::collision(Organism *colidingOrganism) {  
-  
+
   if(this->getOrganismChar() == colidingOrganism->getOrganismChar()){
     this->breed();
     return;
