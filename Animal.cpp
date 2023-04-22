@@ -28,7 +28,7 @@ void Animal::action() {
       if (direction && this->posY - 1 >= 1) {
        dy--;
         moved = true;
-      } else {
+      } else if(this->posY + 1 <= WORLDHEIGHT ){
         dy++;
         moved = true;
       }
@@ -40,7 +40,7 @@ void Animal::action() {
       if(direction && this->posX - 1 >= 1){
         dx--;
         moved = true;
-      }else{
+      }else if(this->posX <= WORLDWIDTH){
         dx++;
         moved = true;
       }
