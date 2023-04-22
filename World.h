@@ -3,7 +3,7 @@
 #include "Organism.h"
 #include <vector>
 #include "Human.h"
-
+class Organism;
 class World {
 private:
   std::vector<Organism*> organisms;
@@ -18,4 +18,6 @@ public:
   void draw();
   Human *getHuman();
   void generateNewWorld();
+  Organism *getOrganismAtXY(int x, int y);
+  void removeOrganism(Organism *organism);
 };

@@ -8,16 +8,19 @@ class Organism {
     int posY;
     int age;
     char organismChar;
-    World &world;
+    World *world;
   public:
-    Organism(World &world);
+    Organism(World *world);
+    ~Organism();
     const int getStrenght() const;
     const int getInitiative() const;
     const int getPosX() const;
     const int getPosY() const;
     const int getAge() const;
-    virtual void collision() = 0;
+    const char getOrganismChar() const;
+    virtual void collision(Organism *colidingOrganism) = 0;
     virtual void action() = 0;
     virtual void draw() const = 0;
     const World &getWorld();
+    virtual void kill();
 };

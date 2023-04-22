@@ -2,11 +2,12 @@
 #include "Console.h"
 #include "config.h"
 #include "Animals/Wolf.h"
+#include <algorithm>
 
 World::World() {
   this->width = WORLDWIDTH;
   this->height = WORLDHEIGHT;
-  this->human = new Human(HUMANSTR, HUMANINITIATIVE, HUMANSTARTINGX, HUMANSTARTINGY, HUMANCHAR, *this);
+  this->human = new Human(HUMANSTR, HUMANINITIATIVE, HUMANSTARTINGX, HUMANSTARTINGY, HUMANCHAR, this);
   this->organisms.push_back(this->human);
   this->generateNewWorld();
 }
@@ -23,10 +24,11 @@ void World::draw() {
 void World::generateNewWorld(){
   int randX = rand() % WORLDWIDTH + 1;
   int randY = rand() % WORLDHEIGHT + 1;
-  Wolf *w = new Wolf(WOLFSTR, WOLFINITIATIVE, randX, randY, WOLFCHAR, *this);
+  Wolf *w = new Wolf(WOLFSTR, WOLFINITIATIVE, randX, randY, WOLFCHAR, this);
   this->organisms.push_back(w);
 }
 
+// turn of animals that have greater initiative than human
 void World::firstActionTurn() {
   for(Organism* o : this->organisms){
     if(dynamic_cast<Human*>(o) == nullptr){
@@ -37,12 +39,26 @@ void World::firstActionTurn() {
   }
 }
 
+//turn of animals that have less initiative than human
 void World::secondActionTurn(){
-  for(Organism* o : this->organisms){
+  for(Organism *o : this->organisms){
     if(dynamic_cast<Human*>(o) == nullptr){
       if(o->getInitiative() < HUMANINITIATIVE || ( o->getInitiative() == HUMANINITIATIVE && o->getAge() <= this->human->getAge())){
         o->action();
       }
     }
   }
+}
+
+Organism *World::getOrganismAtXY(int x, int y){
+  for(Organism *o : this->organisms){
+    if(o->getPosX() == x && o->getPosY() == y){
+      return o;
+    }
+  }
+  return nullptr;
+}
+
+void World::removeOrganism(Organism *organism){
+  this->organisms.erase(std::remove(this->organisms.begin(), this->organisms.end(), organism), this->organisms.end());
 }

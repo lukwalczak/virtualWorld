@@ -1,7 +1,7 @@
 #include "Human.h"
 #include "config.h"
 
-Human::Human(int strength, int initiative, int posX, int posY, char organismChar, World &world) : 
+Human::Human(int strength, int initiative, int posX, int posY, char organismChar, World *world) : 
   Animal(strength, initiative, posX, posY, organismChar, world), abilityCooldown(0), abilityLastTime(0) {}
 
 int Human::action(int dx, int dy){
