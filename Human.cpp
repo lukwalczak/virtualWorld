@@ -9,10 +9,9 @@ Human::~Human(){}
 
 int Human::action(int dx, int dy){
 
-  if(this->checkMove(dx,dy)){
+  if(dx && this->posX + dx >= 1 && this->posX + dx <= WORLDWIDTH){
     
     Organism *collidingOrganism = this->world.getOrganismAtXY(this->posX + dx, this->posY);
-    
     if(collidingOrganism == nullptr || this->collision(collidingOrganism)){
       this->posX += dx;
       this->age++;
@@ -21,7 +20,8 @@ int Human::action(int dx, int dy){
       delete collidingOrganism;
       return 1;
     } else if(this->abilityLastTime > 0){
-      this->moveToAdjacent(); 
+      this->moveToAdjacent();
+      this->age++;
       return 1;
     } else {
       return 1;
@@ -29,10 +29,9 @@ int Human::action(int dx, int dy){
 
   }
   
-  if(this->checkMove(dx,dy)){
+  if(dy && this->posY + dy >= 1 && this->posY + dy <= WORLDHEIGHT){
     
     Organism *collidingOrganism = this->world.getOrganismAtXY(this->posX, this->posY + dy);
-    
     if(collidingOrganism == nullptr || this->collision(collidingOrganism)){
       this->posY += dy;
       this->age++;
@@ -42,6 +41,7 @@ int Human::action(int dx, int dy){
       return 1;
     } else if(this->abilityLastTime > 0){
       this->moveToAdjacent();
+      this->age++;
       return 1;
     }else{
       return 1;

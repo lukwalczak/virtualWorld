@@ -55,13 +55,11 @@ void Animal::action() {
   }
 
   Organism *collidingOrganism = this->world.getOrganismAtXY(this->posX+dx,this->posY+dy);
-  if(collidingOrganism == nullptr){
-    this->posX += dx;
-    this->posY += dy;
-  }else if(this->collision(collidingOrganism)){
+  if(collidingOrganism == nullptr || this->collision(collidingOrganism)){
     this->posX += dx;
     this->posY += dy;
   }
+
   collidingOrganism = nullptr;
   delete collidingOrganism;
   return;
