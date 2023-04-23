@@ -8,6 +8,7 @@
 #include "Plants/Plants.h"
 #include "config.h"
 #include <algorithm>
+#include "OrganismFactory.h"
 
 World::World(int &gameTurn) : gameTurn(gameTurn) {
   this->width = WORLDWIDTH;
@@ -60,8 +61,7 @@ void World::generateAnimals() {
       randX = rand() % WORLDWIDTH + 1;
       randY = rand() % WORLDHEIGHT + 1;
     }
-    Wolf *a = new Wolf(WOLFSTR, WOLFINITIATIVE, randX, randY, WOLFCHAR,
-                       WOLFFULLNAME, *this);
+    Organism *a = OrganismFactory::createOrganism(WOLFFULLNAME, randX, randY, *this);
     this->organisms.push_back(a);
   }
   for (int i = 0; i < (rand() % 3) + 1; i++) {
