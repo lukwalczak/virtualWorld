@@ -8,4 +8,5 @@ public:
   ~Pineborsch(){}
   bool collision(Organism *collidingOrganism) override;
   void addPineborschLog(Organism *collidingOrganism);
+  void action() override;
 };
