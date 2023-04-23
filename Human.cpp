@@ -10,7 +10,7 @@ Human::~Human(){}
 
 int Human::action(int dy, int dx){
   int startingX = this->posX, startingY = this->posY;
-  if(dx && this->posX + dx >= 1 && this->posX + dx <= WORLDWIDTH){
+  if(dx && this->posX + dx >= 1 && this->posX + dx <= this->world.getWidth()){
     
     Organism *collidingOrganism = this->world.getOrganismAtXY(this->posX + dx, this->posY);
     if(collidingOrganism == nullptr || this->collision(collidingOrganism)){
@@ -30,7 +30,7 @@ int Human::action(int dy, int dx){
 
   }
   
-  if(dy && this->posY + dy >= 1 && this->posY + dy <= WORLDHEIGHT){
+  if(dy && this->posY + dy >= 1 && this->posY + dy <= this->world.getHeight()){
     
     Organism *collidingOrganism = this->world.getOrganismAtXY(this->posX, this->posY + dy);
     if(collidingOrganism == nullptr || this->collision(collidingOrganism)){

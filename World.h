@@ -15,13 +15,15 @@ private:
   void clearWorld();
   int &gameTurn;
 public:
-  World(int &gameTurn);
+  World(int &gameTurn, int worldWidth, int worldHeight);
   ~World();
   void firstActionTurn();
   void turn();
   void sortOrganisms();
   void draw();
   Human *getHuman();
+  int getWidth();
+  int getHeight();
   bool isHumanAlive() const;
   void generateNewWorld();
   Organism *getOrganismAtXY(int x, int y);

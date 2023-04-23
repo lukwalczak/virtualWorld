@@ -9,6 +9,8 @@ private:
   int currentTurn;
   bool nextTurn;
   bool continueGame;
+  int worldWidth;
+  int worldHeight;
 public:
   Game();
   ~Game();
@@ -24,4 +26,5 @@ public:
   void drawMapBorders(Console *console);
   void drawEndGame(Console *console);
   void settings();
+  void printSettings();
 };

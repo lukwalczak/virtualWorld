@@ -29,25 +29,25 @@ void Animal::action() {
     
     int direction = rand() % 2;
     
-    if (direction && (this->posY - 1 >= 1 || this->posY < WORLDHEIGHT)) {
+    if (direction && (this->posY - 1 >= 1 || this->posY < this->world.getHeight())) {
       direction = rand() % 2;
       // 1 go up 0 go down
       if (direction && this->posY - 1 >= 1) {
        dy--;
         moved = true;
-      } else if(!direction && this->posY < WORLDHEIGHT ){
+      } else if(!direction && this->posY < this->world.getHeight() ){
         dy++;
         moved = true;
       }
     }
 
-    if (!direction && (this->posX - 1 >= 1 || this->posX  < WORLDWIDTH)) {
+    if (!direction && (this->posX - 1 >= 1 || this->posX  < this->world.getWidth())) {
       //1 go left 0 go right
       direction = rand() % 2;
       if(direction && this->posX - 1 >= 1){
         dx--;
         moved = true;
-      }else if(!direction && this->posX < WORLDWIDTH){
+      }else if(!direction && this->posX < this->world.getWidth()){
         dx++;
         moved = true;
       }

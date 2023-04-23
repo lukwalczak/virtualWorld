@@ -19,10 +19,10 @@ void Organism::draw() const {
   mvprintw(this->posY, this->posX, temp.c_str());
 }
 bool Organism::checkMove(int dx, int dy) const {
-  if(dx && this->posX + dx >= 1 && this->posX + dx <= WORLDWIDTH){
+  if(dx && this->posX + dx >= 1 && this->posX + dx <= this->world.getWidth()){
     return 1;
   }
-  if(dy && this->posY + dy >= 1 && this->posY + dy <= WORLDHEIGHT){
+  if(dy && this->posY + dy >= 1 && this->posY + dy <= this->world.getHeight()){
     return 1;
   }
   return 0;

@@ -4,14 +4,18 @@
 #include <ncurses.h>
 
 Game::Game() {
-  this->world = new World(this->currentTurn);
   this->continueGame = true;
   this->currentTurn = 1;
+  this->worldWidth = WORLDWIDTH;
+  this->worldHeight = WORLDHEIGHT;
+  this->world = new World(this->currentTurn, this->worldWidth, this->worldHeight);
 }
 
 Game::~Game() { delete this->world; }
 
 void Game::startGame() {
+  delete this->world;
+  this->world = new World(this->currentTurn, this->worldWidth, this->worldHeight);
   this->currentTurn = 1;
   Console console;
   this->continueGame = true;
@@ -74,6 +78,7 @@ void Game::menu() {
         break;
       }
       case 3: {
+        this->settings();
         break;
       }
       case 4: {
@@ -92,6 +97,30 @@ void Game::menu() {
 void Game::loadGame() {}
 
 void Game::saveGame() {}
+
+void Game::settings(){
+  this->printSettings();
+  std::string height, width;
+  echo();
+  int ch = getch();
+  while( ch != '\n'){
+    width.push_back(ch);
+    ch = getch();
+  }
+  ch = getch();
+  while(ch != '\n'){
+    height.push_back(ch);
+    ch = getch();
+  }
+  this->worldWidth = std::stoi(width);
+  this->worldHeight = std::stoi(height);
+  noecho();
+}
+
+void Game::printSettings(){
+  Console console;
+  mvprintw(console.getConsoleHeight()/2, console.getConsoleWidth()/2, "Enter world width than height");
+}
 
 void Game::getPlayerMove() {
   bool confirmMove = true;
@@ -204,17 +233,17 @@ void Game::drawLogs(Console *console) {
 
 void Game::drawMapBorders(Console *console) {
   // top
-  for (int i = 0; i < WORLDWIDTH + 2; i++)
+  for (int i = 0; i < this->worldWidth + 2; i++)
     mvprintw(0, i, "+");
   // bottom
-  for (int i = 0; i < WORLDWIDTH + 2; i++)
-    mvprintw(WORLDHEIGHT + 1, i, "+");
+  for (int i = 0; i < this->worldWidth + 2; i++)
+    mvprintw(this->worldHeight + 1, i, "+");
   // left
-  for (int i = 0; i < WORLDHEIGHT + 2; i++)
+  for (int i = 0; i < this->worldHeight + 2; i++)
     mvprintw(i, 0, "+");
   // right
-  for (int i = 0; i < WORLDHEIGHT + 2; i++)
-    mvprintw(i, WORLDWIDTH + 1, "+");
+  for (int i = 0; i < this->worldHeight + 2; i++)
+    mvprintw(i, this->worldWidth + 1, "+");
 }
 
 void Game::drawInterface(Console *console) {

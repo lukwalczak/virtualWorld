@@ -10,9 +10,7 @@
 #include <algorithm>
 #include "OrganismFactory.h"
 
-World::World(int &gameTurn) : gameTurn(gameTurn) {
-  this->width = WORLDWIDTH;
-  this->height = WORLDHEIGHT;
+World::World(int &gameTurn, int worldWidth, int worldHeight) : gameTurn(gameTurn), width(worldWidth), height(worldHeight) {
 }
 World::~World() {
   for (Organism *o : this->organisms) {
@@ -23,6 +21,9 @@ World::~World() {
 }
 
 Human *World::getHuman() { return this->human; }
+
+int World::getWidth(){ return this->width; }
+int World::getHeight(){ return this->height; }
 
 bool World::isHumanAlive() const {
   if (this->human != nullptr)
@@ -54,8 +55,8 @@ void World::generateNewWorld() {
 }
 
 void World::generateAnimals() {
-  int randX = rand() % WORLDWIDTH + 1;
-  int randY = rand() % WORLDHEIGHT + 1;
+  int randX = rand() % this->width + 1;
+  int randY = rand() % this->height + 1;
   // for (int i = 0; i < (rand() % 3) + 10; i++) {
   //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
   //     randX = rand() % WORLDWIDTH + 1;
