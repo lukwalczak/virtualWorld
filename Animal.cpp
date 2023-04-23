@@ -15,6 +15,7 @@ Animal::~Animal(){}
 
 void Animal::increaseStrenght(){
   this->strength+=3;
+  std::cout << this->strength;
 }
 
 void Animal::action() {
@@ -119,12 +120,12 @@ void Animal::addMovedLog(int dx, int dy){
 void Animal::addFightLog(Organism *collidingOrganism, bool won){
   std::string log;
   if(won){
-    log = this->fullOrganismName + " killed " +
-      collidingOrganism->getFullOrganismName() + " at (" +
+    log = this->fullOrganismName + " " + std::to_string(this->getStrenght()) +" killed " +
+      collidingOrganism->getFullOrganismName() +" at (" +
       std::to_string(collidingOrganism->getPosX()) + "," + std::to_string(collidingOrganism->getPosY()) + ")";
   } else {
     log = this->fullOrganismName + " was killed by " +
-      collidingOrganism->getFullOrganismName() + " at (" + std::to_string(this->posX) + "," + std::to_string(this->posY) + ")";
+      collidingOrganism->getFullOrganismName() + " " + std::to_string(this->getStrenght()) + " at (" + std::to_string(this->posX) + "," + std::to_string(this->posY) + ")";
   }
   this->world.addLog(log);
 }

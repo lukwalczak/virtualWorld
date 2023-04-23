@@ -1,7 +1,11 @@
 #include "World.h"
 #include "Animals/Animals.h"
-#include "Plants/Plants.h"
 #include "Console.h"
+#include "Plants/Dandelion.h"
+#include "Plants/Guarana.h"
+#include "Plants/Nightshade.h"
+#include "Plants/Pineborsch.h"
+#include "Plants/Plants.h"
 #include "config.h"
 #include <algorithm>
 
@@ -31,7 +35,7 @@ void World::draw() {
   }
 }
 
-void World::clearWorld(){
+void World::clearWorld() {
   for (Organism *o : this->organisms) {
     delete o;
   }
@@ -41,7 +45,7 @@ void World::clearWorld(){
 }
 
 void World::generateNewWorld() {
-  this->clearWorld(); 
+  this->clearWorld();
   this->human = new Human(HUMANSTR, HUMANINITIATIVE, HUMANSTARTINGX,
                           HUMANSTARTINGY, HUMANCHAR, HUMANFULLNAME, *this);
   this->organisms.push_back(this->human);
@@ -101,18 +105,55 @@ void World::generateAnimals() {
       randX = rand() % WORLDWIDTH + 1;
       randY = rand() % WORLDHEIGHT + 1;
     }
-    Grass *a = new Grass(GRASSSTR, randX, randY,
-                           GRASSCHAR, GRASSFULLNAME, *this);
+    Grass *a =
+        new Grass(GRASSSTR, randX, randY, GRASSCHAR, GRASSFULLNAME, *this);
     this->organisms.push_back(a);
   }
-
+  for (int i = 0; i < (rand() % 10) + 1; i++) {
+    while (this->getOrganismAtXY(randX, randY) != nullptr) {
+      randX = rand() % WORLDWIDTH + 1;
+      randY = rand() % WORLDHEIGHT + 1;
+    }
+    Dandelion *a = new Dandelion(DANDELIONSTR, randX, randY, DANDELIONCHAR,
+                                 DANDELIONFULLNAME, *this);
+    this->organisms.push_back(a);
+  }
+  for (int i = 0; i < (rand() % 10) + 1; i++) {
+    while (this->getOrganismAtXY(randX, randY) != nullptr) {
+      randX = rand() % WORLDWIDTH + 1;
+      randY = rand() % WORLDHEIGHT + 1;
+    }
+    Guarana *a = new Guarana(GUARANASTR, randX, randY, GUARANACHAR,
+                             GUARANAFULLNAME, *this);
+    this->organisms.push_back(a);
+  }
+  for (int i = 0; i < (rand() % 10) + 1; i++) {
+    while (this->getOrganismAtXY(randX, randY) != nullptr) {
+      randX = rand() % WORLDWIDTH + 1;
+      randY = rand() % WORLDHEIGHT + 1;
+    }
+    Nightshade *a = new Nightshade(NIGHTSHADESTR, randX, randY, NIGHTSHADECHAR,
+                                   NIGHTSHADEFULLNAME, *this);
+    this->organisms.push_back(a);
+  }
+  for (int i = 0; i < (rand() % 10) + 1; i++) {
+    while (this->getOrganismAtXY(randX, randY) != nullptr) {
+      randX = rand() % WORLDWIDTH + 1;
+      randY = rand() % WORLDHEIGHT + 1;
+    }
+    Pineborsch *a =
+        new Pineborsch(PINEBORSCHSTR, randX, randY, PINEBORSCHCHAR, PINEBORSCHFULLNAME, *this);
+    this->organisms.push_back(a);
+  }
 }
 
 // turn of animals that have greater initiative than human
 void World::firstActionTurn() {
   for (Organism *o : this->organisms) {
     if (dynamic_cast<Human *>(o) == nullptr) {
-      if (o->getInitiative() > HUMANINITIATIVE || ( o->getInitiative() == HUMANINITIATIVE && this->isHumanAlive() && o->getAge() > this->human->getAge())) {
+      if (o->getInitiative() > HUMANINITIATIVE ||
+          (o->getInitiative() == HUMANINITIATIVE && this->isHumanAlive() &&
+           o->getAge() > this->human->getAge())) {
         o->action();
       }
     }
@@ -123,29 +164,32 @@ void World::firstActionTurn() {
 void World::turn() {
   for (Organism *o : this->organisms) {
     if (dynamic_cast<Human *>(o) == nullptr) {
-      if (o->getInitiative() < HUMANINITIATIVE || ( o->getInitiative() == HUMANINITIATIVE && this->isHumanAlive() && o->getAge() <= this->human->getAge())) {
+      if (o->getInitiative() < HUMANINITIATIVE ||
+          (o->getInitiative() == HUMANINITIATIVE && this->isHumanAlive() &&
+           o->getAge() <= this->human->getAge())) {
         o->action();
       }
     }
   }
 }
 
-bool World::compareOrganisms(Organism *o1, Organism *o2){
-  if(o1->getInitiative() > o2->getInitiative()){
+bool World::compareOrganisms(Organism *o1, Organism *o2) {
+  if (o1->getInitiative() > o2->getInitiative()) {
     return true;
-  }else if( o1->getInitiative() < o2->getInitiative()){
+  } else if (o1->getInitiative() < o2->getInitiative()) {
     return false;
-  }else{
-    if(o1->getAge() > o2->getAge()){
+  } else {
+    if (o1->getAge() > o2->getAge()) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
 }
 
 void World::sortOrganisms() {
-  std::sort(this->organisms.begin(), this->organisms.end(), this->compareOrganisms);
+  std::sort(this->organisms.begin(), this->organisms.end(),
+            this->compareOrganisms);
 }
 
 Organism *World::getOrganismAtXY(int x, int y) {
@@ -161,9 +205,12 @@ void World::removeOrganism(Organism *organism) {
   if (dynamic_cast<Human *>(organism) != nullptr) {
     this->human = nullptr;
   }
+  if (organism == nullptr) {
+    return;
+  }
   this->organisms.erase(
       std::remove(this->organisms.begin(), this->organisms.end(), organism),
-      this->organisms.end()); 
+      this->organisms.end());
 }
 
 void World::startTurn() {
