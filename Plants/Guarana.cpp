@@ -11,7 +11,7 @@ bool Guarana::collision(Organism *collidingOrganisim){
 
 void Guarana::addGuaranaLog(Organism *collidingOrganisim){
   std::string log;
-  log = collidingOrganisim->getFullOrganismName() + " ate " + this->fullOrganismName + " and increased its strenght";
+  log = collidingOrganisim->getFullOrganismName() + " increased its strenght";
   this->world.addLog(log);
 }
 

@@ -1,6 +1,7 @@
 #include "Human.h"
 #include "config.h"
 #include "World.h"
+#include "Plant.h"
 
 Human::Human(int strength, int initiative, int posX, int posY, char organismChar, std::string fullOrganismName, World &world) : 
   Animal(strength, initiative, posX, posY, organismChar, fullOrganismName, world), abilityCooldown(0), abilityLastTime(0) {}
@@ -64,6 +65,9 @@ bool Human::fight(Organism *collidingOrganism){
     if(dynamic_cast<Animal*>(collidingOrganism) != nullptr && dynamic_cast<Animal*>(collidingOrganism)->didReflect(this)){
       this->addReflectionLog(collidingOrganism); 
       return false;
+    }
+    if(dynamic_cast<Plant*>(collidingOrganism) != nullptr){
+      dynamic_cast<Plant*>(collidingOrganism)->collision(this);
     }
     this->addFightLog(collidingOrganism, true);
     this->world.removeOrganism(collidingOrganism);
