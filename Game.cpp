@@ -2,6 +2,7 @@
 #include "Console.h"
 #include "config.h"
 #include <ncurses.h>
+#include <stdexcept>
 
 Game::Game() {
   this->continueGame = true;
@@ -99,7 +100,9 @@ void Game::loadGame() {}
 void Game::saveGame() {}
 
 void Game::settings(){
-  this->printSettings();
+  erase();
+  Console console;
+  mvprintw(console.getConsoleHeight()/2, console.getConsoleWidth()/2, "Enter world width: ");
   std::string height, width;
   echo();
   int ch = getch();
@@ -107,19 +110,29 @@ void Game::settings(){
     width.push_back(ch);
     ch = getch();
   }
+  erase();
+  mvprintw(console.getConsoleHeight()/2, console.getConsoleWidth()/2, "Enter world height: ");
   ch = getch();
   while(ch != '\n'){
     height.push_back(ch);
     ch = getch();
   }
-  this->worldWidth = std::stoi(width);
-  this->worldHeight = std::stoi(height);
+  int worldWidth, worldHeight;
+  try{
+    worldWidth = std::stoi(width);
+    worldHeight = std::stoi(height);
+    this->worldWidth = worldWidth;
+    this->worldHeight = worldHeight;
+  } catch(std::invalid_argument &e){
+
+  } catch(std::out_of_range &e){
+
+  }
   noecho();
+  return;
 }
 
 void Game::printSettings(){
-  Console console;
-  mvprintw(console.getConsoleHeight()/2, console.getConsoleWidth()/2, "Enter world width than height");
 }
 
 void Game::getPlayerMove() {
