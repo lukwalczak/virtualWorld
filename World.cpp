@@ -56,14 +56,14 @@ void World::generateNewWorld() {
 void World::generateAnimals() {
   int randX = rand() % WORLDWIDTH + 1;
   int randY = rand() % WORLDHEIGHT + 1;
-  for (int i = 0; i < (rand() % 3) + 10; i++) {
-    while (this->getOrganismAtXY(randX, randY) != nullptr) {
-      randX = rand() % WORLDWIDTH + 1;
-      randY = rand() % WORLDHEIGHT + 1;
-    }
-    Organism *a = OrganismFactory::createOrganism(WOLFFULLNAME, randX, randY, *this);
-    this->organisms.push_back(a);
-  }
+  // for (int i = 0; i < (rand() % 3) + 10; i++) {
+  //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
+  //     randX = rand() % WORLDWIDTH + 1;
+  //     randY = rand() % WORLDHEIGHT + 1;
+  //   }
+  //   Organism *a = OrganismFactory::createOrganism(WOLFFULLNAME, randX, randY, *this);
+  //   this->organisms.push_back(a);
+  // }
   // for (int i = 0; i < (rand() % 3) + 1; i++) {
   //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
   //     randX = rand() % WORLDWIDTH + 1;
@@ -109,15 +109,15 @@ void World::generateAnimals() {
   //       new Grass(GRASSSTR, randX, randY, GRASSCHAR, GRASSFULLNAME, *this);
   //   this->organisms.push_back(a);
   // }
-  // for (int i = 0; i < (rand() % 10) + 1; i++) {
-  //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
-  //     randX = rand() % WORLDWIDTH + 1;
-  //     randY = rand() % WORLDHEIGHT + 1;
-  //   }
-  //   Dandelion *a = new Dandelion(DANDELIONSTR, randX, randY, DANDELIONCHAR,
-  //                                DANDELIONFULLNAME, *this);
-  //   this->organisms.push_back(a);
-  // }
+  for (int i = 0; i < (rand() % 10) + 1; i++) {
+    while (this->getOrganismAtXY(randX, randY) != nullptr) {
+      randX = rand() % WORLDWIDTH + 1;
+      randY = rand() % WORLDHEIGHT + 1;
+    }
+    Dandelion *a = new Dandelion(DANDELIONSTR, randX, randY, DANDELIONCHAR,
+                                 DANDELIONFULLNAME, *this);
+    this->organisms.push_back(a);
+  }
   // for (int i = 0; i < (rand() % 10) + 1; i++) {
   //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
   //     randX = rand() % WORLDWIDTH + 1;
