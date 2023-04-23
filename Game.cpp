@@ -13,14 +13,14 @@ Game::~Game() { delete this->world; }
 
 void Game::startGame() {
   this->currentTurn = 1;
-  Console *console = Console::getInstance();
+  Console console;
   this->continueGame = true;
 
   world->generateNewWorld();
 
   while (this->continueGame && this->world->isHumanAlive()) {
     this->world->startTurn();
-    this->drawInterface(console);
+    this->drawInterface(&console);
     this->world->draw();
     this->world->firstActionTurn();
     if(this->world->isHumanAlive())
@@ -31,7 +31,7 @@ void Game::startGame() {
   }
 
   if(!this->world->isHumanAlive()){
-    this->drawEndGame(console);
+    this->drawEndGame(&console);
     getch();
   }
 
@@ -39,32 +39,32 @@ void Game::startGame() {
 }
 
 void Game::menu() {
-  Console *console = Console::getInstance();
+  Console console; 
   char input;
-  int cursorPosition = console->getConsoleHeight() / 3 + 2;
+  int cursorPosition = console.getConsoleHeight() / 3 + 2;
   while (true) {
-    this->drawMenu(cursorPosition, console);
+    this->drawMenu(cursorPosition, &console);
     // Dont print entered character
     noecho();
     input = getch();
     switch (input) {
     // Arrow up
     case 0x41: {
-      if (cursorPosition >= console->getConsoleHeight() / 3 + 2) {
+      if (cursorPosition >= console.getConsoleHeight() / 3 + 2) {
         cursorPosition--;
       }
       break;
     }
     // Arrow down
     case 0x42: {
-      if (cursorPosition <= console->getConsoleHeight() / 3 + 3) {
+      if (cursorPosition <= console.getConsoleHeight() / 3 + 3) {
         cursorPosition++;
       }
       break;
     }
     // Enter
     case '\n': {
-      switch (cursorPosition - console->getConsoleHeight() / 3) {
+      switch (cursorPosition - console.getConsoleHeight() / 3) {
       case 1: {
         this->startGame();
         break;
