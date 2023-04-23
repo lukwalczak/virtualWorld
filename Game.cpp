@@ -206,7 +206,7 @@ void Game::drawMenu(int &cursorPosition, Console *console) {
            console->getConsoleWidth() / 2 - 10, "2. Load Game");
 
   mvprintw(console->getConsoleHeight() / 3 + 3,
-           console->getConsoleWidth() / 2 - 10, "3. Settings TODO");
+           console->getConsoleWidth() / 2 - 10, "3. Settings");
 
   mvprintw(console->getConsoleHeight() / 3 + 4,
            console->getConsoleWidth() / 2 - 10, "4. Exit");
