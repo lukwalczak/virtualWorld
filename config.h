@@ -15,7 +15,7 @@
 
 //wolf
 #define WOLFINITIATIVE 5
-#define WOLFSTR 9
+#define WOLFSTR 3
 #define WOLFCHAR 'W'
 #define WOLFFULLNAME "WOLF"
 

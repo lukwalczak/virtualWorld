@@ -7,6 +7,7 @@
 #include "Organism.h"
 #include "World.h"
 #include "Plant.h"
+#include "OrganismFactory.h"
 
 Animal::Animal(int strength, int initiative, int posX, int posY, char organismChar, std::string fullOrganismName, World &world) :
   Organism(strength, initiative, posX, posY, organismChar, fullOrganismName, world) {}
@@ -77,7 +78,24 @@ bool Animal::collision(Organism *colidingOrganism) {
   return 0;
 }
 
-void Animal::breed() const {}
+void Animal::breed() const {
+  for(int i = -1; i<= 1; i+=2){
+    if(this->checkMove(this->posX + i, this->posY)){
+      Organism *o = OrganismFactory::createOrganism(this->getFullOrganismName(), this->posX + i, this->posY, this->world);
+      this->world.addOrganism(o);
+      this->addBreedingLog(o);
+      return;
+    }
+  }
+  for(int i = -1; i<= 1; i+=2){
+    if(this->checkMove(this->posX, this->posY + i)){
+      Organism *o = OrganismFactory::createOrganism(this->getFullOrganismName(), this->posX, this->posY + i, this->world);
+      this->world.addOrganism(o);
+      this->addBreedingLog(o);
+      return;
+    }
+  }
+}
 
 bool Animal::fight(Organism *collidingOrganism){
   if(this->strength >= collidingOrganism->getStrenght()){
@@ -130,7 +148,13 @@ void Animal::addFightLog(Organism *collidingOrganism, bool won){
   this->world.addLog(log);
 }
 
-void Animal::addReflectionLog(Organism *defendingOrganism){
+void Animal::addBreedingLog(Organism *newOrganism) const {
+  std::string log;
+  log = newOrganism->getFullOrganismName() + " has been born";
+  this->world.addLog(log);
+}
+
+void Animal::addReflectionLog(Organism *defendingOrganism) {
   std::string log;
   log = defendingOrganism->getFullOrganismName() + " reflected " + this->getFullOrganismName() + " attack";
   this->world.addLog(log);

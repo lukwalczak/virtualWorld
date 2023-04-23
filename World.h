@@ -30,6 +30,7 @@ public:
   static bool compareOrganisms(Organism *o1, Organism *o2);
   std::vector<std::string> getLogs();
   std::vector<std::string> getLastLogs();
+  void addOrganism(Organism *organism);
   void startTurn();
   void endTurn();
 };

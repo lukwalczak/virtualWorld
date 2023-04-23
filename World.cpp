@@ -56,7 +56,7 @@ void World::generateNewWorld() {
 void World::generateAnimals() {
   int randX = rand() % WORLDWIDTH + 1;
   int randY = rand() % WORLDHEIGHT + 1;
-  for (int i = 0; i < (rand() % 3) + 1; i++) {
+  for (int i = 0; i < (rand() % 3) + 10; i++) {
     while (this->getOrganismAtXY(randX, randY) != nullptr) {
       randX = rand() % WORLDWIDTH + 1;
       randY = rand() % WORLDHEIGHT + 1;
@@ -64,87 +64,91 @@ void World::generateAnimals() {
     Organism *a = OrganismFactory::createOrganism(WOLFFULLNAME, randX, randY, *this);
     this->organisms.push_back(a);
   }
-  for (int i = 0; i < (rand() % 3) + 1; i++) {
-    while (this->getOrganismAtXY(randX, randY) != nullptr) {
-      randX = rand() % WORLDWIDTH + 1;
-      randY = rand() % WORLDHEIGHT + 1;
-    }
-    Sheep *a = new Sheep(SHEEPSTR, SHEEPINITIATIVE, randX, randY, SHEEPCHAR,
-                         SHEEPFULLNAME, *this);
-    this->organisms.push_back(a);
-  }
-  for (int i = 0; i < (rand() % 3) + 1; i++) {
-    while (this->getOrganismAtXY(randX, randY) != nullptr) {
-      randX = rand() % WORLDWIDTH + 1;
-      randY = rand() % WORLDHEIGHT + 1;
-    }
-    Antelope *a = new Antelope(ANTELOPESTR, ANTELOPEINITIATIVE, randX, randY,
-                               ANTELOPECHAR, ANTELOPEFULLNAME, *this);
-    this->organisms.push_back(a);
-  }
-  for (int i = 0; i < (rand() % 3) + 1; i++) {
-    while (this->getOrganismAtXY(randX, randY) != nullptr) {
-      randX = rand() % WORLDWIDTH + 1;
-      randY = rand() % WORLDHEIGHT + 1;
-    }
-    Fox *a = new Fox(FOXSTR, FOXINITIATIVE, randX, randY, FOXCHAR, FOXFULLNAME,
-                     *this);
-    this->organisms.push_back(a);
-  }
-  for (int i = 0; i < (rand() % 3) + 1; i++) {
-    while (this->getOrganismAtXY(randX, randY) != nullptr) {
-      randX = rand() % WORLDWIDTH + 1;
-      randY = rand() % WORLDHEIGHT + 1;
-    }
-    Turtle *a = new Turtle(TURTLESTR, TURTLEINITIATIVE, randX, randY,
-                           TURTLECHAR, TURTLEFULLNAME, *this);
-    this->organisms.push_back(a);
-  }
-  for (int i = 0; i < (rand() % 10) + 1; i++) {
-    while (this->getOrganismAtXY(randX, randY) != nullptr) {
-      randX = rand() % WORLDWIDTH + 1;
-      randY = rand() % WORLDHEIGHT + 1;
-    }
-    Grass *a =
-        new Grass(GRASSSTR, randX, randY, GRASSCHAR, GRASSFULLNAME, *this);
-    this->organisms.push_back(a);
-  }
-  for (int i = 0; i < (rand() % 10) + 1; i++) {
-    while (this->getOrganismAtXY(randX, randY) != nullptr) {
-      randX = rand() % WORLDWIDTH + 1;
-      randY = rand() % WORLDHEIGHT + 1;
-    }
-    Dandelion *a = new Dandelion(DANDELIONSTR, randX, randY, DANDELIONCHAR,
-                                 DANDELIONFULLNAME, *this);
-    this->organisms.push_back(a);
-  }
-  for (int i = 0; i < (rand() % 10) + 1; i++) {
-    while (this->getOrganismAtXY(randX, randY) != nullptr) {
-      randX = rand() % WORLDWIDTH + 1;
-      randY = rand() % WORLDHEIGHT + 1;
-    }
-    Guarana *a = new Guarana(GUARANASTR, randX, randY, GUARANACHAR,
-                             GUARANAFULLNAME, *this);
-    this->organisms.push_back(a);
-  }
-  for (int i = 0; i < (rand() % 10) + 1; i++) {
-    while (this->getOrganismAtXY(randX, randY) != nullptr) {
-      randX = rand() % WORLDWIDTH + 1;
-      randY = rand() % WORLDHEIGHT + 1;
-    }
-    Nightshade *a = new Nightshade(NIGHTSHADESTR, randX, randY, NIGHTSHADECHAR,
-                                   NIGHTSHADEFULLNAME, *this);
-    this->organisms.push_back(a);
-  }
-  for (int i = 0; i < (rand() % 10) + 1; i++) {
-    while (this->getOrganismAtXY(randX, randY) != nullptr) {
-      randX = rand() % WORLDWIDTH + 1;
-      randY = rand() % WORLDHEIGHT + 1;
-    }
-    Pineborsch *a =
-        new Pineborsch(PINEBORSCHSTR, randX, randY, PINEBORSCHCHAR, PINEBORSCHFULLNAME, *this);
-    this->organisms.push_back(a);
-  }
+  // for (int i = 0; i < (rand() % 3) + 1; i++) {
+  //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
+  //     randX = rand() % WORLDWIDTH + 1;
+  //     randY = rand() % WORLDHEIGHT + 1;
+  //   }
+  //   Sheep *a = new Sheep(SHEEPSTR, SHEEPINITIATIVE, randX, randY, SHEEPCHAR,
+  //                        SHEEPFULLNAME, *this);
+  //   this->organisms.push_back(a);
+  // }
+  // for (int i = 0; i < (rand() % 3) + 1; i++) {
+  //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
+  //     randX = rand() % WORLDWIDTH + 1;
+  //     randY = rand() % WORLDHEIGHT + 1;
+  //   }
+  //   Antelope *a = new Antelope(ANTELOPESTR, ANTELOPEINITIATIVE, randX, randY,
+  //                              ANTELOPECHAR, ANTELOPEFULLNAME, *this);
+  //   this->organisms.push_back(a);
+  // }
+  // for (int i = 0; i < (rand() % 3) + 1; i++) {
+  //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
+  //     randX = rand() % WORLDWIDTH + 1;
+  //     randY = rand() % WORLDHEIGHT + 1;
+  //   }
+  //   Fox *a = new Fox(FOXSTR, FOXINITIATIVE, randX, randY, FOXCHAR, FOXFULLNAME,
+  //                    *this);
+  //   this->organisms.push_back(a);
+  // }
+  // for (int i = 0; i < (rand() % 3) + 1; i++) {
+  //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
+  //     randX = rand() % WORLDWIDTH + 1;
+  //     randY = rand() % WORLDHEIGHT + 1;
+  //   }
+  //   Turtle *a = new Turtle(TURTLESTR, TURTLEINITIATIVE, randX, randY,
+  //                          TURTLECHAR, TURTLEFULLNAME, *this);
+  //   this->organisms.push_back(a);
+  // }
+  // for (int i = 0; i < (rand() % 10) + 1; i++) {
+  //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
+  //     randX = rand() % WORLDWIDTH + 1;
+  //     randY = rand() % WORLDHEIGHT + 1;
+  //   }
+  //   Grass *a =
+  //       new Grass(GRASSSTR, randX, randY, GRASSCHAR, GRASSFULLNAME, *this);
+  //   this->organisms.push_back(a);
+  // }
+  // for (int i = 0; i < (rand() % 10) + 1; i++) {
+  //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
+  //     randX = rand() % WORLDWIDTH + 1;
+  //     randY = rand() % WORLDHEIGHT + 1;
+  //   }
+  //   Dandelion *a = new Dandelion(DANDELIONSTR, randX, randY, DANDELIONCHAR,
+  //                                DANDELIONFULLNAME, *this);
+  //   this->organisms.push_back(a);
+  // }
+  // for (int i = 0; i < (rand() % 10) + 1; i++) {
+  //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
+  //     randX = rand() % WORLDWIDTH + 1;
+  //     randY = rand() % WORLDHEIGHT + 1;
+  //   }
+  //   Guarana *a = new Guarana(GUARANASTR, randX, randY, GUARANACHAR,
+  //                            GUARANAFULLNAME, *this);
+  //   this->organisms.push_back(a);
+  // }
+  // for (int i = 0; i < (rand() % 10) + 1; i++) {
+  //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
+  //     randX = rand() % WORLDWIDTH + 1;
+  //     randY = rand() % WORLDHEIGHT + 1;
+  //   }
+  //   Nightshade *a = new Nightshade(NIGHTSHADESTR, randX, randY, NIGHTSHADECHAR,
+  //                                  NIGHTSHADEFULLNAME, *this);
+  //   this->organisms.push_back(a);
+  // }
+  // for (int i = 0; i < (rand() % 10) + 1; i++) {
+  //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
+  //     randX = rand() % WORLDWIDTH + 1;
+  //     randY = rand() % WORLDHEIGHT + 1;
+  //   }
+  //   Pineborsch *a =
+  //       new Pineborsch(PINEBORSCHSTR, randX, randY, PINEBORSCHCHAR, PINEBORSCHFULLNAME, *this);
+  //   this->organisms.push_back(a);
+  // }
+}
+
+void World::addOrganism(Organism *organism){
+  this->organisms.push_back(organism);
 }
 
 // turn of animals that have greater initiative than human

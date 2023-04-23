@@ -14,5 +14,6 @@ public:
   virtual void addMovedLog(int dx, int dy);
   virtual void addFightLog(Organism *collidingOrganism, bool won);
   virtual void addReflectionLog(Organism *defendingOrganism);
+  virtual void addBreedingLog(Organism *newOrganism) const;
   virtual void move(int dx, int dy);
 };

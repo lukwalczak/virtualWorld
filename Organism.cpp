@@ -18,7 +18,7 @@ void Organism::draw() const {
   std::string temp(1,this->organismChar);
   mvprintw(this->posY, this->posX, temp.c_str());
 }
-bool Organism::checkMove(int dx, int dy){
+bool Organism::checkMove(int dx, int dy) const {
   if(dx && this->posX + dx >= 1 && this->posX + dx <= WORLDWIDTH){
     return 1;
   }
