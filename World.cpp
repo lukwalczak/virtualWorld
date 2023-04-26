@@ -112,8 +112,8 @@ void World::generateAnimals() {
   // }
   for (int i = 0; i < (rand() % 10) + 1; i++) {
     while (this->getOrganismAtXY(randX, randY) != nullptr) {
-      randX = rand() % WORLDWIDTH + 1;
-      randY = rand() % WORLDHEIGHT + 1;
+      randX = rand() % this->width + 1;
+      randY = rand() % this->height + 1;
     }
     Dandelion *a = new Dandelion(DANDELIONSTR, randX, randY, DANDELIONCHAR,
                                  DANDELIONFULLNAME, *this);
