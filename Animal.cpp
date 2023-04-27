@@ -29,6 +29,8 @@ void Animal::action() {
   if(!this->checkAdjacentFreeSpaces()){
     return;
   }
+  if(this->breedCooldown > 0)
+    this->breedCooldown--;
   while (!moved) {
     
     int direction = rand() % 2;
@@ -73,14 +75,18 @@ void Animal::action() {
   return;
 }
 
-bool Animal::collision(Organism *colidingOrganism) {  
+bool Animal::collision(Organism *collidingOrganism) {  
 
-  if(this->getOrganismChar() == colidingOrganism->getOrganismChar()){
+  if(this->getOrganismChar() == collidingOrganism->getOrganismChar()){
+    if(this->breedCooldown == 0 && collidingOrganism->getBreedCooldown() == 0){
+    this->setBreedCooldown();
+    collidingOrganism->setBreedCooldown();
     this->breed();
+    }
     return 0;
   }
 
-  if(this->fight(colidingOrganism)){
+  if(this->fight(collidingOrganism)){
     return 1;
   }
 
@@ -91,6 +97,7 @@ void Animal::breed() const {
   for(int i = -1; i<= 1; i+=2){
     if(this->checkMove(this->posX + i, this->posY)){
       Organism *o = OrganismFactory::createOrganism(this->getFullOrganismName(), this->posX + i, this->posY, this->world);
+      o->setBreedCooldown();
       this->world.addOrganism(o);
       this->addBreedingLog(o);
       return;
@@ -111,6 +118,7 @@ bool Animal::fight(Organism *collidingOrganism){
   if(this->strength >= collidingOrganism->getStrenght()){
     if(dynamic_cast<Human*>(collidingOrganism) != nullptr){
       if(dynamic_cast<Human*>(collidingOrganism)->getAbilityLastTime() > 0){
+        this->addReflectionLog(collidingOrganism);
         return 0;
       }
     }

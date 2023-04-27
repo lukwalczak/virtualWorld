@@ -74,6 +74,7 @@ bool Human::fight(Organism *collidingOrganism){
     return true;
   } else {
     if(this->abilityLastTime > 0){
+      this->addReflectionLog(collidingOrganism);
       return false;
     } else {
       this->addFightLog(collidingOrganism, false);

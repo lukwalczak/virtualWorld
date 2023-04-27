@@ -275,7 +275,7 @@ void Game::drawInterface(Console &console) {
            console.getConsoleWidth() * 3 / 4, "p - use special ability");
 
   mvprintw(console.getConsoleHeight() * 3 / 4 + 8,
-           console.getConsoleWidth() * 3 / 4, "s -save game");
+           console.getConsoleWidth() * 3 / 4, "s -save game // not implemented");
 
   mvprintw(console.getConsoleHeight() * 3 / 4 + 10,
            console.getConsoleWidth() * 3 / 4, "q - exit to menu");

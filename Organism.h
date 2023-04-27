@@ -9,6 +9,7 @@ class Organism {
     int posY;
     int age;
     char organismChar;
+    int breedCooldown;
     std::string fullOrganismName;
     World &world;
   public:
@@ -19,6 +20,8 @@ class Organism {
     const int getPosX() const;
     const int getPosY() const;
     const int getAge() const;
+    const int getBreedCooldown() const;
+    void setBreedCooldown();
     const std::string getFullOrganismName() const;
     const char getOrganismChar() const;
     virtual bool collision(Organism *colidingOrganism);
