@@ -105,7 +105,6 @@ bool Animal::fight(Organism *collidingOrganism){
       }
     }
     if(dynamic_cast<Animal*>(collidingOrganism) != nullptr && dynamic_cast<Animal*>(collidingOrganism)->didReflect(this)){
-      this->addReflectionLog(collidingOrganism); 
       return 0;
     }
     if(dynamic_cast<Plant*>(collidingOrganism) != nullptr){
@@ -157,5 +156,11 @@ void Animal::addBreedingLog(Organism *newOrganism) const {
 void Animal::addReflectionLog(Organism *defendingOrganism) {
   std::string log;
   log = defendingOrganism->getFullOrganismName() + " reflected " + this->getFullOrganismName() + " attack";
+  this->world.addLog(log);
+}
+
+void Animal::addEscapeLog(Organism *attackingOrganism){
+  std::string log;
+  log = this->getFullOrganismName() + " escaped " + attackingOrganism->getFullOrganismName() + " attack";
   this->world.addLog(log);
 }

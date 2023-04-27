@@ -13,7 +13,8 @@ public:
   virtual bool didReflect(Organism *attackingOrganism);
   virtual void addMovedLog(int dx, int dy);
   virtual void addFightLog(Organism *collidingOrganism, bool won);
-  virtual void addReflectionLog(Organism *defendingOrganism);
+  virtual void addReflectionLog(Organism *attackingOrganism);
   virtual void addBreedingLog(Organism *newOrganism) const;
+  virtual void addEscapeLog(Organism *attackingOrganism);
   virtual void move(int dx, int dy);
 };

@@ -17,5 +17,6 @@ void Turtle::action(){
 bool Turtle::didReflect(Organism *attackingOrganism){
   if(attackingOrganism->getStrenght() >= TURTLEDEFLECTIONTRESHOLD)
     return false;
+  this->addReflectionLog(this); 
   return true;
 }
