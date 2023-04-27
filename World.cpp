@@ -51,20 +51,25 @@ void World::generateNewWorld() {
   this->human = new Human(HUMANSTR, HUMANINITIATIVE, HUMANSTARTINGX,
                           HUMANSTARTINGY, HUMANCHAR, HUMANFULLNAME, *this);
   this->organisms.push_back(this->human);
-  this->generateAnimals();
+  this->generateOrganisms();
 }
 
-void World::generateAnimals() {
+void World::generateOrganism(std::string animalName){
   int randX = rand() % this->width + 1;
   int randY = rand() % this->height + 1;
-  // for (int i = 0; i < (rand() % 3) + 10; i++) {
-  //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
-  //     randX = rand() % WORLDWIDTH + 1;
-  //     randY = rand() % WORLDHEIGHT + 1;
-  //   }
-  //   Organism *a = OrganismFactory::createOrganism(WOLFFULLNAME, randX, randY, *this);
-  //   this->organisms.push_back(a);
-  // }
+  while(this->getOrganismAtXY(randX, randY) != nullptr) {
+       randX = rand() % this->width + 1;
+       randY = rand() % this->height + 1;
+  }
+  Organism *o = OrganismFactory::createOrganism(animalName, randX, randY, *this);
+  this->organisms.push_back(o);
+}
+
+void World::generateOrganisms() {
+  //generate wolfs
+  for (int i = 0; i < (rand() % 3) + 10; i++) {
+    this->generateOrganism(WOLFFULLNAME);
+  }
   // for (int i = 0; i < (rand() % 3) + 1; i++) {
   //   while (this->getOrganismAtXY(randX, randY) != nullptr) {
   //     randX = rand() % WORLDWIDTH + 1;
@@ -111,13 +116,7 @@ void World::generateAnimals() {
   //   this->organisms.push_back(a);
   // }
   for (int i = 0; i < (rand() % 10) + 1; i++) {
-    while (this->getOrganismAtXY(randX, randY) != nullptr) {
-      randX = rand() % this->width + 1;
-      randY = rand() % this->height + 1;
-    }
-    Dandelion *a = new Dandelion(DANDELIONSTR, randX, randY, DANDELIONCHAR,
-                                 DANDELIONFULLNAME, *this);
-    this->organisms.push_back(a);
+    this->generateOrganism(DANDELIONFULLNAME);
   }
   // for (int i = 0; i < (rand() % 10) + 1; i++) {
   //   while (this->getOrganismAtXY(randX, randY) != nullptr) {

@@ -30,3 +30,16 @@ bool Organism::checkMove(int dx, int dy) const {
 bool Organism::collision(Organism *colidingOrganism){
   return false;
 }
+bool Organism::checkAdjacentFreeSpaces() const {
+  for(int i = -1; i <= 1; i+=2){
+    if(this->world.getOrganismAtXY(this->posX + i, this->posY) == nullptr){
+      return true;
+    }  
+  }
+  for(int i = -1; i <= 1; i+=2){
+    if(this->world.getOrganismAtXY(this->posX, this->posY + i) == nullptr){
+      return true;
+    }  
+  }
+  return false;
+}

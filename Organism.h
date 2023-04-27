@@ -26,4 +26,5 @@ class Organism {
     void draw() const;
     const World &getWorld();
     virtual bool checkMove(int dx, int dy) const;
+    bool checkAdjacentFreeSpaces() const;
 };

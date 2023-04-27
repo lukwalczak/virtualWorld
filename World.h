@@ -11,7 +11,8 @@ private:
   Human *human;
   int width;
   int height;
-  void generateAnimals();
+  void generateOrganisms();
+  void generateOrganism(std::string animalName);
   void clearWorld();
   int &gameTurn;
 public:

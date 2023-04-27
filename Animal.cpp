@@ -24,7 +24,11 @@ void Animal::action() {
   bool moved = false;
   int dx = 0;
   int dy = 0;
+  int returnCounter = 0;
   this->age++;
+  if(!this->checkAdjacentFreeSpaces()){
+    return;
+  }
   while (!moved) {
     
     int direction = rand() % 2;
@@ -53,6 +57,11 @@ void Animal::action() {
       }
 
     }
+
+    if(returnCounter == 4)
+      return;
+    returnCounter++;
+
   }
 
   Organism *collidingOrganism = this->world.getOrganismAtXY(this->posX+dx,this->posY+dy);
@@ -95,6 +104,7 @@ void Animal::breed() const {
       return;
     }
   }
+  return;
 }
 
 bool Animal::fight(Organism *collidingOrganism){
