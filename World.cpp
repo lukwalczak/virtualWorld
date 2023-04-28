@@ -64,7 +64,7 @@ void World::generateOrganism(std::string animalName){
        randY = rand() % this->height + 1;
   }
   Organism *o = OrganismFactory::createOrganism(animalName, randX, randY, *this);
-  this->organisms.push_back(o);
+  this->addOrganism(o);
 }
 
 void World::generateOrganisms() {
@@ -72,7 +72,6 @@ void World::generateOrganisms() {
   for (int i = 0; i < (rand() % STARTINGWOLF) + 15; i++) {
     this->generateOrganism(WOLFFULLNAME);
   }
-  
 
   for (int i = 0; i < (rand() % STARTINGANTELOPE); i++) {
     this->generateOrganism(ANTELOPEFULLNAME);
@@ -106,7 +105,7 @@ void World::generateOrganisms() {
     this->generateOrganism(NIGHTSHADEFULLNAME);
   }
 
-  for (int i = 0; i < (rand() % STARTINGPINEBORSCH); i++) {
+  for (int i = 0; i < (rand() % STARTINGPINE + 1); i++) {
     this->generateOrganism(PINEBORSCHFULLNAME);
   }
   
